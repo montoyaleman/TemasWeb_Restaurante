@@ -23,10 +23,10 @@ async function mainMenu() {
         const option = readline.question("Seleccione una opcion: ");
 
         switch (option) {
-        case "1":        await ingredientes.menuIngrediente(mongoose);       break;              
-        case "2":        await actualizarIngredientes(mongoose);    break;        
-        case "3":        await eliminarIngrediente(mongoose);       break;
-        case "4":        await listarIngredientes(mongoose);        break;
+        case "1":        await ingredientes.menuIngrediente(mongoose);      break;              
+        case "2":        await actualizarIngredientes(mongoose);            break;        
+        case "3":        await eliminarIngrediente(mongoose);               break;
+        case "4":        await listarIngredientes(mongoose);                break;
         //en caso de escoger 6, se cierra el programa
         case "5":
             exit = true;
