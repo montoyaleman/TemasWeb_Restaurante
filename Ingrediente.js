@@ -97,12 +97,6 @@ async function listarIngredientes(mongoose) {
 }
 
 async function listarIngredientePorID(mongoose) {
-    // try {
-    //     await connectarMongoose();
-    // } catch (err) {
-    //     console.error("Error al conectar a la base de datos:", err);
-    //     return;
-    // }
     var idIngrediente = readline.question("Inserte el ID del ingrediente que quiere buscar: ");
     const ingredientes = await Ingrediente.find({_id: idIngrediente}).exec();
 
