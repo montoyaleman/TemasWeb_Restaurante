@@ -1,6 +1,17 @@
 const readline = require('readline-sync');
 const mongoose = require('mongoose');
 
+//se obtiene el schema actual de la bd
+const Schema = mongoose.Schema;
+
+const ingredienteSchema = new Schema({
+    nombre: String,
+    medida: String,
+    cantidad: Number
+});
+//se hace la variable para obtener el estado actual de la tabla de ingredientes
+const Ingrediente = mongoose.model('Ingrediente', ingredienteSchema);
+
 
 //menu para las opciones relacionadas con el manejo de ingredientes
 async function menuIngrediente(mongoose) {
@@ -34,25 +45,6 @@ async function menuIngrediente(mongoose) {
 
 //funcion utilizada para agregar ingredientes nuevos a la bd
 async function agregarIngredientes(mongoose) {
-    // try {
-    //     await connectarMongoose();
-    // } catch (err) {
-    //     console.error("Error al conectar a la base de datos:", err);
-    //     return;
-    // }
-    
-    //se obtiene el schema actual de la bd
-    const Schema = mongoose.Schema;
-
-    const ingredienteSchema = new Schema({
-        nombre: String,
-        medida: String,
-        cantidad: Number
-    });
-    //se hace la variable para obtener el estado actual de la tabla de ingredientes
-    const Ingrediente = mongoose.model('Ingrediente', ingredienteSchema);
-
-
     //se pregunta los datos necesarios para agregar un ingrediente
     var nombreIngrediente = readline.question("Inserte el nombre del ingrediente: ");
     var medidaIngrediente = readline.question("Inserte con qué se mide el ingrediente: ");
@@ -71,21 +63,6 @@ async function agregarIngredientes(mongoose) {
 }
 
 async function actualizarIngredientes(mongoose) {
-    // try {
-    //     await connectarMongoose();
-    // } catch (err) {
-    //     console.error("Error al conectar a la base de datos:", err);
-    //     return;
-    // }
-
-    const Schema = mongoose.Schema;
-    const ingredienteSchema = new Schema({
-        nombre: String,
-        medida: String,
-        cantidad: Number
-    });
-    const Ingrediente = mongoose.model('Ingrediente', ingredienteSchema);
-
     var nombreIngrediente = readline.question("Inserte el nombre del ingrediente que quiere actualizar: ");
     var cantidadIngrediente = readline.question("Inserte la nueva cantidad: ");
 
@@ -102,21 +79,6 @@ async function actualizarIngredientes(mongoose) {
 }
 
 async function eliminarIngrediente(mongoose) {
-    // try {
-    //     await connectarMongoose();
-    // } catch (err) {
-    //     console.error("Error al conectar a la base de datos:", err);
-    //     return;
-    // }
-
-    const Schema = mongoose.Schema;
-    const ingredienteSchema = new Schema({
-        nombre: String,
-        medida: String,
-        cantidad: Number
-    });
-    const Ingrediente = mongoose.model('Ingrediente', ingredienteSchema);
-
     var nombreIngrediente = readline.question("Inserte el nombre del ingrediente que quiere eliminar: ");
 
     const filter = { nombre: nombreIngrediente };
@@ -126,20 +88,6 @@ async function eliminarIngrediente(mongoose) {
 }
 
 async function listarIngredientes(mongoose) {
-    // try {
-    //     await connectarMongoose();
-    // } catch (err) {
-    //     console.error("Error al conectar a la base de datos:", err);
-    //     return;
-    // }
-
-    const Schema = mongoose.Schema;
-    const ingredienteSchema = new Schema({
-        nombre: String,
-        medida: String,
-        cantidad: Number
-    });
-    const Ingrediente = mongoose.model('Ingrediente', ingredienteSchema);
     const ingredientes = await Ingrediente.find().exec();
 
     console.log("\n--- Lista de Ingredientes ---");
@@ -155,14 +103,6 @@ async function listarIngredientePorID(mongoose) {
     //     console.error("Error al conectar a la base de datos:", err);
     //     return;
     // }
-
-    const Schema = mongoose.Schema;
-    const ingredienteSchema = new Schema({
-        nombre: String,
-        medida: String,
-        cantidad: Number
-    });
-    const Ingrediente = mongoose.model('Ingrediente', ingredienteSchema);
     var idIngrediente = readline.question("Inserte el ID del ingrediente que quiere buscar: ");
     const ingredientes = await Ingrediente.find({_id: idIngrediente}).exec();
 
