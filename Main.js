@@ -5,6 +5,7 @@ const readline = require('readline-sync');
 const mongoose = require('mongoose');
 const ingredientes = require('./Ingrediente')
 const platillos =  require('./Platillo')
+const usuarios = require('./Usuario')
 
 //menu principal donde se van a acceder todos los menus
 async function mainMenu() {

@@ -192,5 +192,3 @@ async function listarPlatilloPorID(mongoose) {
 }
 
 module.exports = {Platillo, menuPlatillo};
-
-
