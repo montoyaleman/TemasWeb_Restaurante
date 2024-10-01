@@ -4,6 +4,7 @@
 const readline = require('readline-sync');
 const mongoose = require('mongoose');
 const ingredientes = require('./Ingrediente')
+const platillos =  require('./Platillo')
 
 //menu principal donde se van a acceder todos los menus
 async function mainMenu() {
@@ -24,7 +25,7 @@ async function mainMenu() {
 
         switch (option) {
         case "1":        await ingredientes.menuIngrediente(mongoose);      break;              
-        case "2":        await actualizarIngredientes(mongoose);            break;        
+        case "2":        await platillos.menuPlatillo(mongoose);            break;        
         case "3":        await eliminarIngrediente(mongoose);               break;
         case "4":        await listarIngredientes(mongoose);                break;
         //en caso de escoger 6, se cierra el programa

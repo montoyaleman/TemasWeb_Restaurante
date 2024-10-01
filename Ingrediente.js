@@ -105,5 +105,5 @@ async function listarIngredientePorID(mongoose) {
         console.log(`${ingrediente._id} - ${ingrediente.nombre} (${ingrediente.medida}): ${ingrediente.cantidad}`);
     });
 }
+module.exports = { Ingrediente, menuIngrediente };
 
-module.exports = {menuIngrediente};
