@@ -28,7 +28,7 @@ async function mainMenu() {
         case "1":        await ingredientes.menuIngrediente(mongoose);      break;              
         case "2":        await platillos.menuPlatillo(mongoose);            break;        
         case "3":        await eliminarIngrediente(mongoose);               break;
-        case "4":        await listarIngredientes(mongoose);                break;
+        case "4":        await usuarios.menuUsuario(mongoose);              break;
         //en caso de escoger 6, se cierra el programa
         case "5":
             exit = true;
