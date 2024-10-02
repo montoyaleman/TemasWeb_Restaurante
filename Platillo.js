@@ -4,7 +4,7 @@ const Ingrediente = require('./Ingrediente').Ingrediente;
 
 
 const Schema = mongoose.Schema;
-
+// Creamos un esquema para el modelo de Platillo
 const platilloSchema = new Schema({
     nombre: String,
     tipo: String,
@@ -16,6 +16,7 @@ const platilloSchema = new Schema({
 
 const Platillo = mongoose.model('Platillo', platilloSchema);
 
+// Función para mostrar el menú principal
 async function menuPlatillo(mongoose) {
     let exit = false;
 
@@ -44,17 +45,18 @@ async function menuPlatillo(mongoose) {
     }
 }
 
-
+// Función para agregar un platillo
 async function agregarPlatillos(mongoose) {
     
+    // Mostramos los ingredientes existentes
     const ingrediente = await Ingrediente.find().exec();
     console.log("\nIngredientes existentes:");
     ingrediente.forEach((ingrediente, index) => {
         console.log(`${index + 1}. ${ingrediente.nombre}`);
     });
 
+    // Leemos los ingredientes seleccionados por el usuario
     var ingredientesSeleccionados = [];
-
     while (true) {
         const opcion = readline.question("Seleccione un ingrediente (o 's' para salir): ");
         if (opcion.toLowerCase() === 's') {
@@ -68,13 +70,14 @@ async function agregarPlatillos(mongoose) {
             console.log("Opción no válida. Por favor, seleccione un ingrediente válido.");
         }
     }
-
+    // Leemos los datos del platillo
     var nombre = readline.question("Ingrese el nombre del platillo: ");
     var tipo = readline.question("Ingrese el tipo del platillo: ");
     var desc = readline.question("Ingrese la descripción del platillo: ");
     var cantidad = readline.question("Ingrese la cantidad del platillo: ");
     var precio = readline.question("Ingrese el precio del platillo: ");
     
+    // Creamos un nuevo platillo
     const platillo = new Platillo({
         nombre,
         tipo,
@@ -83,7 +86,7 @@ async function agregarPlatillos(mongoose) {
         ingredientes: ingredientesSeleccionados,
         precio: parseFloat(precio)
     });
-
+    // Guardamos el platillo en la base de datos
     try {
         await platillo.save();
         console.log("Platillo agregado con éxito.");
@@ -91,28 +94,34 @@ async function agregarPlatillos(mongoose) {
         console.log("Error al agregar el platillo:", error);
     }
 }
-
+// Función para actualizar un platillo
 async function actualizarPlatillos(mongoose) {
-    
+    // Leemos el ID del platillo a actualizar
     var id = readline.question("Ingrese el ID del platillo a actualizar: ");
+    
+    
+    // Buscamos el platillo en la base de datos
     const platillo = await Platillo.find({_id: new mongoose.Types.ObjectId(id)}).exec();
 
     if (platillo.length === 0) {
         console.log("No se encontró ningún platillo con ese ID.");
         return;
     }
-
+    // Leemos los datos del platillo
     var nombre = readline.question(`Ingrese el nuevo nombre del platillo (${platillo[0].nombre}): `);
     var tipo = readline.question(`Ingrese el nuevo tipo del platillo (${platillo[0].tipo}): `);
     var desc = readline.question(`Ingrese la nueva descripción del platillo (${platillo[0].desc}): `);
     var cantidad = readline.question(`Ingrese la nueva cantidad del platillo (${platillo[0].cantidad}): `);
     var precio = readline.question(`Ingrese el nuevo precio del platillo (${platillo[0].precio}): `);
 
+
+    // Mostramos los ingredientes existentes
     const ingrediente = await Ingrediente.find().exec();
     console.log("\nIngredientes existentes:");
     ingrediente.forEach((ingrediente, index) => {
         console.log(`${index + 1}. ${ingrediente.nombre}`);
     });
+    // Leemos los ingredientes seleccionados por el usuario
     const ingredientesSeleccionados = [];
     while (true) {
         const opcion = readline.question("Seleccione un ingrediente (o 's' para salir): ");
@@ -126,14 +135,15 @@ async function actualizarPlatillos(mongoose) {
             console.log("Opción no válida. Por favor, seleccione un ingrediente válido.");
         }
     }
-
+    // Actualizamos el platillo
     platillo[0].nombre = nombre || platillo[0].nombre;
     platillo[0].tipo = tipo || platillo[0].tipo;
     platillo[0].desc = desc || platillo[0].desc;
     platillo[0].cantidad = parseInt(cantidad) || platillo[0].cantidad;
     platillo[0].precio = parseFloat(precio) || platillo[0].precio;
     platillo[0].ingredientes = ingredientesSeleccionados;
-
+    
+    // Guardamos los cambios en la base de datos
     try {
         await platillo[0].save();
         console.log("Platillo actualizado con éxito.");
@@ -141,16 +151,18 @@ async function actualizarPlatillos(mongoose) {
         console.log("Error al actualizar el platillo:", error);
     }
 }
-
+// Función para eliminar un platillo
 async function eliminarPlatillos(mongoose) {
-    
+    // Leemos el ID del platillo a eliminar
     var id = readline.question("Ingrese el ID del platillo a eliminar: ");
+    // Buscamos el platillo en la base de datos
     const platillo = await Platillo.find({_id: new mongoose.Types.ObjectId(id)}).exec();
 
     if (platillo.length === 0) {
         console.log("No se encontró ningún platillo con ese ID.");
         return;
     }
+    // Eliminamos el platillo
     try {
         await Platillo.deleteOne({_id: new mongoose.Types.ObjectId(id)});
         console.log("Platillo eliminado con éxito.");
@@ -158,25 +170,27 @@ async function eliminarPlatillos(mongoose) {
         console.log("Error al eliminar el platillo:", error);
     }
 }
-
+// Función para listar todos los platillos
 async function listarPlatillos(mongoose) {
-    
+    // Buscamos todos los platillos en la base de datos
     const platillos = await Platillo.find().exec();
     console.log("\nPlatillos:");
     platillos.forEach((platillo, index) => {
         console.log(`${index + 1}. - ID: ${platillo._id} -Nombre: ${platillo.nombre} -Tipo:${platillo.tipo} - Precio: ${platillo.precio}`);
     });
 }
-
+// Función para listar un platillo por ID
 async function listarPlatilloPorID(mongoose) {
+    // Leemos el ID del platillo a listar
     var id = readline.question("Ingrese el ID del platillo a mostrar: ");
+    // Buscamos el platillo en la base de datos
     const platillo = await Platillo.find({_id: new mongoose.Types.ObjectId(id)}).exec();
 
     if (platillo.length === 0) {
         console.log("No se encontró ningún platillo con ese ID.");
         return;
     }
-
+    //Mostramos el platillo encontrado
     console.log("\nPlatillo:");
     console.log(`Nombre: ${platillo[0].nombre}`);
     console.log(`Tipo: ${platillo[0].tipo}`);
@@ -190,5 +204,5 @@ async function listarPlatilloPorID(mongoose) {
         console.log(`${index + 1}. ${ingrediente.nombre}`);
     });
 }
-
+//Exportamos los modulos y el objeto
 module.exports = {Platillo, menuPlatillo};
