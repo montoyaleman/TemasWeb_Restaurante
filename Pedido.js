@@ -12,7 +12,7 @@ const Schema = mongoose.Schema;
 // }, { _id: false});
 const pedidoSchema = new Schema({
     fecha: Date,
-    idusuario: {type: Schema.Types.ObjectId, ref:'Usuario'},
+    idUsuario: {type: Schema.Types.ObjectId, ref:'Usuario'},
     mesa: Number,
     orden: Array,
     total: Number
