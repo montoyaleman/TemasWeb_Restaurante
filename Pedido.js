@@ -6,6 +6,10 @@ const Usuario = require('./Usuario').Usuario;
 
 const Schema = mongoose.Schema;
 
+// const ordenSchema = new Schema({
+//     idPlatillo: [{type: Schema.Types.ObjectId, ref:'Platillo'}],
+//     cantidad: Number,
+// }, { _id: false});
 const pedidoSchema = new Schema({
     fecha: Date,
     usuario: [{type: Schema.Types.ObjectId, ref:'Usuario'}],
@@ -14,13 +18,14 @@ const pedidoSchema = new Schema({
     total: Number
 });
 
+
 const Pedido = mongoose.model('Pedido', pedidoSchema);
 
 async function menuPedido(mongoose) {
     let exit = false;
 
     while (!exit) {
-        console.log("\n--- Menú Principal ---");
+        console.log("\n--- Menú Pedido ---");
         console.log("1. Agregar Pedido");
         console.log("2. Actualizar Pedido");
         console.log("3. Eliminar Pedido");
@@ -44,55 +49,51 @@ async function menuPedido(mongoose) {
 
 
 async function crearPedido(mongoose) {
-    var tiempoTranscurrido = Date.now;
-    var fecha = new Date(tiempoTranscurrido);
-    
+    var fecha = new Date();
     const usuarios = await Usuario.find().exec();
+
     console.log("\nUsuarios existentes:");
     usuarios.forEach((usuario, index) => {
-        console.log(`${index + 1},${usuario.id} ${usuario.nombre} ,`);
-    });
-    var idUsuario = readline.question("Ingrese el ID de Usuario: ");
-    
-    var mesa = readline.question("Ingrese el numero de la Mesa: ");
-    
-    var platillos= await Platillo.find().exec();
-    console.log("\nPlatillos:");
-    platillos.forEach((platillo, index) => {
-        console.log(`${index + 1},${platillo.id} ${platillo.nombre} ,`);
+        console.log(`${index + 1}. ${usuario.id} - ${usuario.nombre} ,`);
     });
 
-    var idPlatillo= readline.question("Ingrese el ID del Platillo: ");
-    platillos = await Platillo.find({_id: new mongoose.Types.ObjectId(idPlatillo)}).exec();
-    platillos.get
-    var cantidad = readline.question("Ingrese la cantidad del platillo: ");
+    var idUsuario = readline.question("Ingrese el ID de Usuario: ");
+    //idUsuario = new mongoose.types.ObjectId(idUsuario); 
+    var mesa = readline.question("Ingrese el numero de la Mesa: ");
+    var respuesta = "si";
     var ordenes=[];
-    ordenes.push([idPlatillo,cantidad]);
-    var respuesta = readline.question("Desea agregar otro Platillo?(si)(no):");
     while(respuesta==="si"){
+        var platillos= await Platillo.find().exec();
         console.log("\nPlatillos:");
         platillos.forEach((platillo, index) => {
-            console.log(`${index + 1},${platillo.id} ${platillo.nombre} ,`);
+            console.log(`${index + 1}. ${platillo.id} - ${platillo.nombre} ,`);
         });
-    
-        idPlatillo= readline.question("Ingrese el ID del Platillo: ");
-        cantidad = readline.question("Ingrese la cantidad del platillo: ");
-        ordenes.push([idPlatillo,cantidad]);
-        respuesta = readline.question("Desea agregar otro Platillo?(si)(no):")
+
+        var idPlatillo= readline.question("Ingrese el ID del Platillo: ");
+        platillos = await Platillo.find({_id: new mongoose.Types.ObjectId(idPlatillo)}).exec();
+        platillos.get
+        var cantidad = readline.question("Ingrese la cantidad del platillo: ");        
+        //idPlatillo = new mongoose.types.ObjectId(idPlatillo)
+        var orden = {idPlatillo, cantidad}
+        ordenes.push(orden)
+        
+        respuesta = readline.question("Desea agregar otro Platillo? (si/no): ");
     }
 
     var total = readline.question("Ingrese el total del pedido: ");
     
-    const pedido = new Platillo({
-        fecha,
-        idUsuario,
-        mesa,
-        ordenes,
+    const nuevoPedido = new Pedido({
+        fecha: fecha,
+        idUsuario: idUsuario,
+        mesa: mesa,
+        orden: ordenes,
         total: parseFloat(total)
     });
 
+    console.log(nuevoPedido)
+
     try {
-        await pedido.save();
+        await nuevoPedido.save();
         console.log("Pedido agregado con éxito.");
     } catch (error) {
         console.log("Error al agregar el pedido:", error);
@@ -153,7 +154,4 @@ async function listarPedido(mongoose) {
         console.log(`${index + 1}. - ID: ${pedido._id} -Fecha: ${pedido.fecha} -Usuario: ${pedido.idUsuario} - Mesa: ${pedido.mesa} -Orden: ${pedido.orden} -Total: ${pedido.total}`);
     });
 }
-
-
-
 module.exports = {Pedido, menuPedido};

@@ -1,4 +1,3 @@
-
 //modulos necesarios para el programa
 //incluye las otras clases de este mismo programa
 const readline = require('readline-sync');
