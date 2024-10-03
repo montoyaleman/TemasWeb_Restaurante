@@ -25,8 +25,7 @@ async function menuPedido(mongoose) {
         console.log("2. Actualizar Pedido");
         console.log("3. Eliminar Pedido");
         console.log("4. Listar Pedidos");
-        console.log("5. Listar Pedidos Por ID");
-        console.log("6. Salir");
+        console.log("5. Salir");
 
         const option = readline.question("Seleccione una opcion: ");
 
@@ -57,7 +56,7 @@ async function crearPedido(mongoose) {
     
     var mesa = readline.question("Ingrese el numero de la Mesa: ");
     
-    const platillos= await Platillo.find().exec();
+    var platillos= await Platillo.find().exec();
     console.log("\nPlatillos:");
     platillos.forEach((platillo, index) => {
         console.log(`${index + 1},${platillo.id} ${platillo.nombre} ,`);
@@ -154,6 +153,7 @@ async function listarPedido(mongoose) {
         console.log(`${index + 1}. - ID: ${pedido._id} -Fecha: ${pedido.fecha} -Usuario: ${pedido.idUsuario} - Mesa: ${pedido.mesa} -Orden: ${pedido.orden} -Total: ${pedido.total}`);
     });
 }
+
 
 
 module.exports = {Pedido, menuPedido};
