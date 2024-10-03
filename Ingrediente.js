@@ -18,7 +18,7 @@ async function menuIngrediente(mongoose) {
     let exit = false;
 
     while (!exit) {
-        console.log("\n--- Menú Principal ---");
+        console.log("\n--- Menú Ingrediente ---");
         console.log("1. Agregar ingrediente");
         console.log("2. Actualizar ingrediente");
         console.log("3. Eliminar ingrediente");

@@ -21,7 +21,7 @@ async function menuPlatillo(mongoose) {
     let exit = false;
 
     while (!exit) {
-        console.log("\n--- Menú Principal ---");
+        console.log("\n--- Menú Platillos ---");
         console.log("1. Agregar platillo");
         console.log("2. Actualizar platillo");
         console.log("3. Eliminar platillo");

@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const ingredientes = require('./Ingrediente')
 const platillos =  require('./Platillo')
 const usuarios = require('./Usuario')
+const pedidos = require('./Pedido')
 
 //menu principal donde se van a acceder todos los menus
 async function mainMenu() {
@@ -27,7 +28,7 @@ async function mainMenu() {
         switch (option) {
         case "1":        await ingredientes.menuIngrediente(mongoose);      break;              
         case "2":        await platillos.menuPlatillo(mongoose);            break;        
-        case "3":        await eliminarIngrediente(mongoose);               break;
+        case "3":        await pedidos.menuPedido(mongoose);               break;
         case "4":        await usuarios.menuUsuario(mongoose);              break;
         //en caso de escoger 6, se cierra el programa
         case "5":
