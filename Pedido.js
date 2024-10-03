@@ -12,7 +12,7 @@ const Schema = mongoose.Schema;
 // }, { _id: false});
 const pedidoSchema = new Schema({
     fecha: Date,
-    idUsuario: [{type: Schema.Types.ObjectId, ref:'Usuario'}],
+    usuario: {type: Schema.Types.ObjectId, ref:'Usuario'},
     mesa: Number,
     orden: Array,
     total: Number
@@ -110,13 +110,13 @@ async function actualizarPedido(mongoose) {
         return;
     }
 
-    var idUsuario = readline.question(`Ingrese el nuevo tipo del platillo (${pedido[0].tipo}): `);
-    var mesa = readline.question(`Ingrese la nueva mesa del pedido (${pedido[0].desc}): `);
-    var total = readline.question(`Ingrese el nuevo total (${pedido[0].cantidad}): `);
+    var usuario = readline.question(`Ingrese el nuevo Usuario (ID) (${pedido[0].usuario}): `);
+    var mesa = readline.question(`Ingrese la nueva mesa del pedido (${pedido[0].mesa}): `);
+    var total = readline.question(`Ingrese el nuevo total (${pedido[0].total}): `);
     
 
 
-    pedido[0].idUsuario = idUsuario || pedido[0].idUsuario;
+    pedido[0].usuario = usuario || pedido[0].usuario;
     pedido[0].mesa = mesa || pedido[0].mesa;
     pedido[0].total = parseInt(total) || pedido[0].total;
     
@@ -150,8 +150,8 @@ async function listarPedido(mongoose) {
     
     const pedidos = await Pedido.find().exec();
     console.log("\nPedidos:");
-    pedidos.forEach((platillo, index) => {
-        console.log(`${index + 1}. - ID: ${pedido._id} -Fecha: ${pedido.fecha} -Usuario: ${pedido.idUsuario} - Mesa: ${pedido.mesa} -Orden: ${pedido.orden} -Total: ${pedido.total}`);
+    pedidos.forEach((pedido, index) => {
+        console.log(`${index + 1}. - ID: ${pedido._id} -Fecha: ${pedido.fecha} -Usuario: ${pedido.usuario} - Mesa: ${pedido.mesa} -Orden: ${pedido.orden} -Total: ${pedido.total}`);
     });
 }
 module.exports = {Pedido, menuPedido};

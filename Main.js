@@ -2,10 +2,11 @@
 //incluye las otras clases de este mismo programa
 const readline = require('readline-sync');
 const mongoose = require('mongoose');
+const pedidos = require('./Pedido')
 const ingredientes = require('./Ingrediente')
 const platillos =  require('./Platillo')
 const usuarios = require('./Usuario')
-const pedidos = require('./Pedido')
+
 
 //menu principal donde se van a acceder todos los menus
 async function mainMenu() {
