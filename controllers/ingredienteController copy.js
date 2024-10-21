@@ -1,3 +1,7 @@
+//este es una copia del controller de ingredientes 
+//que tiene todos los comandos necesarios para correr
+//sin depender en la archivos hechos en el avance anterior
+
 //const fs = require('fs');
 //const IngredienteModel = require('../models/Ingrediente.js');
 //const dataPath = './data/restaurante.json';

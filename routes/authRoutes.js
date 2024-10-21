@@ -1,15 +1,13 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
+const mongoose = require('mongoose');
 
 // Cargar la clave secreta desde las variables de entorno
 const secretKey = process.env.SECRET_KEY;
 
 // Usuarios de ejemplo (esto debe almacenarse en una base de datos en una aplicación real)
-const users = [
-  { id: 1, username: 'user1', password: 'pass1' },
-  { id: 2, username: 'user2', password: 'pass2' },
-];
+const users = mon
 
 // Ruta para autenticar y obtener un token JWT
 router.post('/login', (req, res) => {

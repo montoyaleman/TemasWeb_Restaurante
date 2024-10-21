@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const ingredienteController = require('../controllers/ingredienteController');
+const ingredienteController = require('../models/Ingrediente');
 
 // get all ingredientes
 router.get('/ingrediente', ingredienteController.getAllIngredientes);
