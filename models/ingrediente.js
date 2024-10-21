@@ -6,6 +6,5 @@ class Ingrediente {
       this.medida = medida;
       this.cantidad = cantidad;
     }
-}
-  
+}  
 module.exports = Ingrediente;

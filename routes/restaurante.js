@@ -1,12 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const restauranteController = require('../controllers/restauranteController');
+const ingredienteController = require('../controllers/ingredienteController');
 
-// Rutas
-router.get('/', restauranteController.getAllIngredientes);
-router.post('/ingrediente', restauranteController.addIngrediente);
-router.get('/ingrediente/:id', restauranteController.getIngredienteById);
-router.put('/ingrediente/:id', restauranteController.updateIngrediente);
-router.delete('/ingrediente/:id', restauranteController.deleteIngrediente);
+// get all ingredientes
+router.get('/ingrediente', ingredienteController.getAllIngredientes);
+//insertar ingredientes
+router.post('/ingrediente', ingredienteController.addIngrediente);
+//get ingrediente por id
+router.get('/ingrediente/:id', ingredienteController.getIngredienteById);
+//update
+router.put('/ingrediente/:id/:cantidad', ingredienteController.updateIngrediente);
+//delete
+router.delete('/ingrediente/:id', ingredienteController.deleteIngrediente);
 
 module.exports = router;

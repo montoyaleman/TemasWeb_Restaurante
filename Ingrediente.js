@@ -10,7 +10,7 @@ const ingredienteSchema = new Schema({
     cantidad: Number
 });
 //se hace la variable para obtener el estado actual de la tabla de ingredientes
-const Ingrediente = mongoose.model('Ingrediente', ingredienteSchema);
+const Ingrediente = mongoose.model('Ingrediente', {nombre: String, medida: String, cantidad: Number});
 
 
 //menu para las opciones relacionadas con el manejo de ingredientes
