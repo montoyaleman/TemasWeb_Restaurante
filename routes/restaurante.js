@@ -3,6 +3,7 @@ const router = express.Router();
 const ingredienteController = require('../models/Ingrediente');
 const platilloController = require('../models/Platillo');
 const pedidoController = require('../models/Pedido')
+const usuarioController = require('../models/Usuario');
 
 // Rutas para los ingredientes
 
