@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const ingredienteController = require('../models/Ingrediente');
 const platilloController = require('../models/Platillo');
+const pedidoController = require('../models/Pedido')
 
 // get all ingredientes
 router.get('/ingrediente', ingredienteController.getAllIngredientes);
@@ -24,6 +25,15 @@ router.post('/platillo', platilloController.addPlatillo);
 router.put('/platillo/:id', platilloController.updatePlatillo);
 //delete
 router.delete('/platillo/:id', platilloController.deletePlatillo);
+
+// get todos los pedidos
+router.get('/pedido', pedidoController.listarPedidos);
+//insertar pedidos
+router.post('/pedido', pedidoController.crearPedido);
+//update
+router.put('/pedido/:id', pedidoController.actualizarPedido);
+//delete
+router.delete('/pedido/:id', pedidoController.eliminarPedido);
 
 
 module.exports = router;
