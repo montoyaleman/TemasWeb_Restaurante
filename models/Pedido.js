@@ -1,157 +1,88 @@
-const readline = require('readline-sync');
 const mongoose = require('mongoose');
-const Platillo  = require('./Platillo').Platillo;
-const Usuario = require('./Usuario').Usuario;
-
-
 const Schema = mongoose.Schema;
+const Pedido = mongoose.model('Pedidos', {fecha: Date, idUsuario: {type: Schema.Types.ObjectId, ref:'Usuario'}, mesa:Number, orden:Array,total: Number});
 
-// const ordenSchema = new Schema({
-//     idPlatillo: [{type: Schema.Types.ObjectId, ref:'Platillo'}],
-//     cantidad: Number,
-// }, { _id: false});
-const pedidoSchema = new Schema({
-    fecha: Date,
-    idUsuario: {type: Schema.Types.ObjectId, ref:'Usuario'},
-    mesa: Number,
-    orden: Array,
-    total: Number
-});
-
-
-const Pedido = mongoose.model('Pedido', pedidoSchema);
-
-async function menuPedido(mongoose) {
-    let exit = false;
-
-    while (!exit) {
-        console.log("\n--- Menú Pedido ---");
-        console.log("1. Agregar Pedido");
-        console.log("2. Actualizar Pedido");
-        console.log("3. Eliminar Pedido");
-        console.log("4. Listar Pedidos");
-        console.log("5. Salir");
-
-        const option = readline.question("Seleccione una opcion: ");
-
-        switch (option) {
-        case "1":        await crearPedido(mongoose);       break;              
-        case "2":        await actualizarPedido(mongoose);    break;        
-        case "3":        await eliminarPedido(mongoose);       break;
-        case "4":        await listarPedido(mongoose);        break;
-        case "5":
-            exit = true;
-            return;
-        default:        console.log("Opcion no valida. Por favor, seleccione una opcion valida.");
-        }
-    }
+//funcion para conectarse a la base de datos de mongodb
+async function connectarMongoose(){    
+  return new Promise((resolve, reject) => {
+      mongoose.connect('mongodb://localhost/restaurante');
+      mongoose.connection.on('open', _ => {
+          console.log("Se ha conectado a la base de datos.");
+          resolve();            
+      });
+  });
 }
 
-
-async function crearPedido(mongoose) {
-    var fecha = new Date();
-    const usuarios = await Usuario.find().exec();
-
-    console.log("\nUsuarios existentes:");
-    usuarios.forEach((usuario, index) => {
-        console.log(`${index + 1}. ${usuario.id} - ${usuario.nombre} ,`);
-    });
-
-    var idUsuario = readline.question("Ingrese el ID de Usuario: ");
-    //idUsuario = new mongoose.types.ObjectId(idUsuario); 
-    var mesa = readline.question("Ingrese el numero de la Mesa: ");
-    var respuesta = "si";
-    var ordenes=[];
-    while(respuesta==="si"){
-        var platillos= await Platillo.find().exec();
-        console.log("\nPlatillos:");
-        platillos.forEach((platillo, index) => {
-            console.log(`${index + 1}. ${platillo.id} - ${platillo.nombre} ,`);
-        });
-
-        var idPlatillo= readline.question("Ingrese el ID del Platillo: ");
-        platillos = await Platillo.find({_id: new mongoose.Types.ObjectId(idPlatillo)}).exec();
-        platillos.get
-        var cantidad = readline.question("Ingrese la cantidad del platillo: ");        
-        //idPlatillo = new mongoose.types.ObjectId(idPlatillo)
-        var orden = {idPlatillo, cantidad}
-        ordenes.push(orden)
-        
-        respuesta = readline.question("Desea agregar otro Platillo? (si/no): ");
-    }
-
-    var total = readline.question("Ingrese el total del pedido: ");
-    
-    const nuevoPedido = new Pedido({
-        fecha: fecha,
-        idUsuario: idUsuario,
-        mesa: mesa,
-        orden: ordenes,
-        total: parseFloat(total)
-    });
-
-    console.log(nuevoPedido)
-
+// Funciones del controlador
+exports.listarPedidos = async (req, res) => {
     try {
-        await nuevoPedido.save();
-        console.log("Pedido agregado con éxito.");
-    } catch (error) {
-        console.log("Error al agregar el pedido:", error);
+      await connectarMongoose();
+      const restauranteData = await Pedido.find().exec(); 
+      res.status(200).json(restauranteData);
+    } catch (err) {
+      console.log(err)
+      res.status(500).json({ error: 'No se pudieron obtener los Pedidos' });
     }
-}
+};
 
-async function actualizarPedido(mongoose) {
-    
-    var id = readline.question("Ingrese el ID del pedido a actualizar: ");
-    const pedido = await Pedido.find({_id: new mongoose.Types.ObjectId(id)}).exec();
+  exports.crearPedido = async (req, res) => {
+    console.log(req.body.fecha);
+    console.log(req.body.idUsuario);
+    console.log(req.body.mesa);
+    console.log(req.body.orden);
+    console.log(req.body.total);
 
-    if (pedido.length === 0) {
-        console.log("No se encontró ningún pedido con ese ID.");
-        return;
-    }
-
-    var usuario = readline.question(`Ingrese el nuevo Usuario (ID) (${pedido[0].usuario}): `);
-    var mesa = readline.question(`Ingrese la nueva mesa del pedido (${pedido[0].mesa}): `);
-    var total = readline.question(`Ingrese el nuevo total (${pedido[0].total}): `);
-    
-
-
-    pedido[0].usuario = usuario || pedido[0].usuario;
-    pedido[0].mesa = mesa || pedido[0].mesa;
-    pedido[0].total = parseInt(total) || pedido[0].total;
-    
-
+    if (!req.body.fecha || !req.body.idUsuario || !req.body.mesa || !req.body.orden || !req.body.total)
+      return res.status(400).json("No se inserto valores correctos para un pedido");
     try {
-        await pedido[0].save();
-        console.log("Pedido actualizado con éxito.");
-    } catch (error) {
-        console.log("Error al actualizar el pedido:", error);
+      await connectarMongoose();
+      const newPedido = new Pedido({
+        fecha: req.body.fecha, 
+        idUsuario: req.body.idUsuario, 
+        mesa: req.body.mesa,
+        orden: req.body.orden,
+        total: req.body.total
+      });
+      await newPedido.save();
+      res.status(201).json(newPedido);
+      //mongoose.disconnect();
+    } catch (err) {
+      res.status(500).json({ error: 'No se pudo agregar el pedido' });
     }
-}
-
-async function eliminarPedido(mongoose) {
-
-    var id = readline.question("Ingrese el ID del pedido a actualizar: ");
-    const pedido = await Pedido.find({_id: new mongoose.Types.ObjectId(id)}).exec();
+  };
+  
+  exports.actualizarPedido = async (req, res) => {
+    if (req.body.mesa && isNaN(parseInt(req.body.mesa))) 
+       return res.status(400).json("Mesa insertada no valida");
+    if (req.body.total && isNaN(parseFloat(req.body.total)))
+        return res.status(400).json("El total ingresado no es valido")
+    const filter = { _id: req.params.id };
+    const update = {
+        mesa: req.body.mesa,
+        idUsuario: req.body.idUsuario,
+        total: req.body.total
+    }
     
-    if (pedido.length === 0) {
-        console.log("No se encontró ningún pedido con ese ID.");
-        return;
-    }
     try {
-        await Pedido.deleteOne({_id: new mongoose.Types.ObjectId(id)});
-        console.log("Pedido eliminado con éxito.");
-    } catch (error) {
-        console.log("Error al eliminar el pedido:", error);
+      await connectarMongoose();
+      const updatedPedido = await Pedido.findOneAndUpdate(filter, update, { new: true });
+      if (!updatedPedido) res.status(404).json("No se encontro un Pedido con ese ID.");
+      else res.status(200).json(updatedPedido);
+    } catch (err) {
+      console.log(err)
+      res.status(500).json({ error: 'No se pudo actualizar el Pedido' });
     }
-}
-
-async function listarPedido(mongoose) {
-    
-    const pedidos = await Pedido.find().exec();
-    console.log("\nPedidos:");
-    pedidos.forEach((pedido, index) => {
-        console.log(`${index + 1}. - ID: ${pedido._id} -Fecha: ${pedido.fecha} -Usuario: ${pedido.usuario} - Mesa: ${pedido.mesa} -Orden: ${pedido.orden} -Total: ${pedido.total}`);
-    });
-}
-module.exports = {Pedido, menuPedido};
+  };
+  
+  exports.eliminarPedido = async (req, res) => {
+    const filter = { _id: req.params.id };
+    try {
+      await connectarMongoose();
+      const pedidoEliminado = await Pedido.findOneAndDelete(filter);
+      if (!pedidoEliminado) res.status(404).json("No se encontro un pedido con ese ID.");
+      else res.status(200).json({ message: 'Pedido eliminado exitosamente' });
+    } catch (err) {
+      res.status(500).json({ error: 'No se pudo eliminar el pedido' });
+    }
+  };
+  
