@@ -11,6 +11,7 @@ const usuarioSchema = new mongoose.Schema({
 // Modelo de usuario
 const Usuario = mongoose.model('Usuario', usuarioSchema);
 
+
 // Conectar a la base de datos
 async function connectarMongoose(){    
   return new Promise((resolve, reject) => {
@@ -97,3 +98,4 @@ exports.deleteUsuario = async (req, res) => {
       res.status(500).json({ error: 'No se pudo eliminar el usuario' });
     }
 };
+
