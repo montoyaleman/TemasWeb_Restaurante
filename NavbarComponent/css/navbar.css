@@ -1,0 +1,48 @@
+nav {
+	background-color: #343a40;
+	color: white;
+	padding: 1em;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+nav .nav-left, nav .nav-right {
+	display: flex;
+	align-items: center;
+}
+
+nav .nav-left a {
+	color: white;
+	text-decoration: none;
+	margin-right: 15px;
+	font-size: 1em;
+}
+
+nav .nav-left a:hover {
+	color: #cccccc;
+}
+
+nav .search-bar {
+	display: flex;
+	align-items: center;
+}
+
+nav input[type="text"] {
+	padding: 0.5em;
+	border: 1px solid #ccc;
+	border-radius: 0.25em 0 0 0.25em;
+}
+
+nav button {
+	padding: 0.5em 1em;
+	background-color: #17a2b8;
+	border: none;
+	color: white;
+	border-radius: 0 0.25em 0.25em 0;
+	cursor: pointer;
+}
+
+nav button:hover {
+	background-color: #138496;
+}

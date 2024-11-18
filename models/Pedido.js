@@ -56,6 +56,7 @@ exports.listarPedidos = async (req, res) => {
        return res.status(400).json("Mesa insertada no valida");
     if (req.body.total && isNaN(parseFloat(req.body.total)))
         return res.status(400).json("El total ingresado no es valido")
+      
     const filter = { _id: req.params.id };
     const update = {
         mesa: req.body.mesa,
