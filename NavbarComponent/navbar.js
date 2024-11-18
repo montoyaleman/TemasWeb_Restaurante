@@ -17,8 +17,8 @@ class Navbar extends HTMLElement {
 		shadow.innerHTML += `
 			<nav>
 				<div class="nav-left">
-					<a href="#" class="logo">Restaurante</a>
-					<a href="#">Ingredientes</a>
+					<a href="index.html" class="logo">Restaurante</a>
+					<a href="ingredientes.html">Ingredientes</a>
 					<a href="#">Platillos</a>
 					<a href="#">Pedidos</a>
 					<a href="#">Usuarios</a>
