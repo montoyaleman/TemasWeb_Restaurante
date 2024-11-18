@@ -32,6 +32,7 @@ exports.getAllUsuarios = async (req, res) => {
       await connectarMongoose();
       const usuariosData = await Usuario.find().exec(); 
       res.status(200).json(usuariosData);
+      mongoose.disconnect();
     } catch (err) {
       console.log(err)
       res.status(500).json({ error: 'No se pudieron obtener los usuarios' });
@@ -46,6 +47,7 @@ exports.getUsuarioById = async (req, res) => {
       const usuarioData = await Usuario.findById(usuarioId).exec();
       if (!usuarioData) res.status(404).json("No se encontró un usuario con ese ID.");
       else res.status(200).json(usuarioData);
+      mongoose.disconnect();
     } catch (err) {
       console.log(err);
       res.status(500).json({ error: 'No se pudo obtener el usuario' });
@@ -62,6 +64,7 @@ exports.addUsuario = async (req, res) => {
       const newUsuario = new Usuario({ username, pw, name, role });
       await newUsuario.save();
       res.status(201).json(newUsuario);
+      mongoose.disconnect();
     } catch (err) {
       console.log(err);
       res.status(500).json({ error: 'No se pudo agregar el usuario' });
@@ -72,7 +75,6 @@ exports.addUsuario = async (req, res) => {
 exports.updateUsuario = async (req, res) => {
     const usuarioId = req.params.id;
     const { username, pw, name, role } = req.body;
-
     try {
       await connectarMongoose();
       const updatedUsuario = await Usuario.findByIdAndUpdate(
@@ -82,6 +84,7 @@ exports.updateUsuario = async (req, res) => {
       );
       if (!updatedUsuario) res.status(404).json("No se encontró un usuario con ese ID.");
       else res.status(200).json(updatedUsuario);
+      mongoose.disconnect();
     } catch (err) {
       console.log(err);
       res.status(500).json({ error: 'No se pudo actualizar el usuario' });
@@ -96,6 +99,7 @@ exports.deleteUsuario = async (req, res) => {
       const usuarioEliminado = await Usuario.findByIdAndDelete(usuarioId);
       if (!usuarioEliminado) res.status(404).json("No se encontró un usuario con ese ID.");
       else res.status(200).json({ message: 'Usuario eliminado exitosamente' });
+      mongoose.disconnect();
     } catch (err) {
       console.log(err);
       res.status(500).json({ error: 'No se pudo eliminar el usuario' });
@@ -105,17 +109,14 @@ exports.deleteUsuario = async (req, res) => {
 // Middleware para verificar el token en rutas protegidas
 const verifyToken = (req, res, next) => {
   const token = req.header('Authorization');
-
   if (!token) {
     return res.status(401).json({ error: 'Token no proporcionado' });
   }
-
   try {
     // Verifica y decodifica el token JWT utilizando la clave secreta
     const secretKey = process.env.SECRET_KEY; // Obtén la clave secreta de las variables de entorno
     const tokenWithoutBearer = token.split(" ")[1]; // Extraer el token sin "Bearer"
     const decoded = jwt.verify(tokenWithoutBearer, secretKey);
-
     // Puedes acceder a los datos del token, por ejemplo, el ID de usuario
     req.userId = decoded.userId;
     next();
@@ -129,4 +130,3 @@ router.get('/', verifyToken, (req, res) => {
   // Ejemplo de respuesta con el ID de usuario del token
   res.json({ mensaje: 'Esta es una ruta protegida por JWT', usuario: req.userId });
 });
-
