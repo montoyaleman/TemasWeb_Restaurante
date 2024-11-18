@@ -21,16 +21,18 @@ class Ingrediente extends HTMLElement {
 		//se muestran los datos
 		//this.#consultaComentarios(2,shadow);		
 	}		
+	
 	#agregaEstilo(shadow){
 		let link = document.createElement("link");
 		link.setAttribute("rel","stylesheet");
 		link.setAttribute("href","./IngredienteComponent/css/ingrediente.css");		
 		shadow.appendChild(link);	
 	}
+
 	#render(shadow){
 		shadow.innerHTML += `
 		<section class="ingredientes">
-			<h1>Ingredientes</h1>
+			<h1>Gestión de Ingredientes</h1>
 			<div class="input">
 				<p class="textosDetalles">ID</p>
 				<input type="text" id="txtId">
@@ -73,6 +75,7 @@ class Ingrediente extends HTMLElement {
 			ingredientes.forEach(c => this.#despliegaIngrediente(tmp,div,c));
 		  });	
 	}
+
 	#despliegaIngrediente(tmp,div,ingrediente){
 		let clone = tmp.content.cloneNode(true);		 
 		let element = clone.querySelector("#idArticulo");
@@ -88,7 +91,6 @@ class Ingrediente extends HTMLElement {
 		element.innerHTML=ingrediente.medida;
 		div.appendChild(clone);
 	}
-
 	
 	//utilizados para probar que la pagina si puede mostrar los 
 	//los datos de la api
@@ -110,4 +112,5 @@ class Ingrediente extends HTMLElement {
 	// 	div.appendChild(clone);
 	// }
 }
+
 window.customElements.define('ingrediente-info', Ingrediente);
