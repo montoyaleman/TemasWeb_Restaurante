@@ -23,6 +23,7 @@ exports.getAllPlatillos = async (req, res) => {
     await connectarMongoose();
     const platillosData = await Platillo.find().populate('ingredientes').exec();
     res.status(200).json(platillosData);
+    mongoose.disconnect();
   } catch (err) {
     console.log(err)
     res.status(500).json({ error: 'No se pudieron obtener los platillos' });
@@ -36,6 +37,7 @@ exports.getPlatilloById = async (req, res) => {
     const platilloData = await Platillo.findById(platilloId).populate('ingredientes').exec();
     if (!platilloData) res.status(404).json("No se encontró un platillo con ese ID.");
     else res.status(200).json(platilloData);
+    mongoose.disconnect();
   } catch (err) {
     res.status(500).json({ error: 'No se pudo obtener el platillo' });
   }
@@ -56,6 +58,7 @@ exports.addPlatillo = async (req, res) => {
     });
     await newPlatillo.save();
     res.status(201).json(newPlatillo);
+    mongoose.disconnect();
   } catch (err) {
     res.status(500).json({ error: 'No se pudo agregar el platillo' });
   }
@@ -70,6 +73,7 @@ exports.updatePlatillo = async (req, res) => {
     const updatedPlatillo = await Platillo.findOneAndUpdate(filter, update, { new: true });
     if (!updatedPlatillo) res.status(404).json("No se encontró un platillo con ese ID.");
     else res.status(200).json(updatedPlatillo);
+    mongoose.disconnect();
   } catch (err) {
     console.log(err)
     res.status(500).json({ error: 'No se pudo actualizar el platillo' });
@@ -83,6 +87,7 @@ exports.deletePlatillo = async (req, res) => {
     const platilloEliminado = await Platillo.findOneAndDelete(filter);
     if (!platilloEliminado) res.status(404).json("No se encontró un platillo con ese ID .");
     else res.status(200).json({ message: 'Platillo eliminado exitosamente' });
+    mongoose.disconnect();
   } catch (err) {
     res.status(500).json({ error: 'No se pudo eliminar el platillo' });
   }

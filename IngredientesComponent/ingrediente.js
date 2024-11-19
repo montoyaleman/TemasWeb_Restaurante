@@ -12,15 +12,17 @@ class Ingrediente extends HTMLElement {
 		this.#render(shadow);
 		this.#consultaIngredientes(shadow);	
 	}		
+	
 	#agregaEstilo(shadow){
 		let link = document.createElement("link");
 		link.setAttribute("rel","stylesheet");
 		link.setAttribute("href","./IngredienteComponent/css/ingrediente.css");
 	}
+
 	#render(shadow){
 		shadow.innerHTML += `
 		<section class="ingredientes">
-			<h1>Ingredientes</h1>
+			<h1>Gestión de Ingredientes</h1>
 			<div class="input">
 				<p class="textosDetalles">ID</p>
 				<input type="text" id="txtId">
@@ -81,6 +83,7 @@ class Ingrediente extends HTMLElement {
 		})
 		.catch(error => console.error('Error al obtener ingredientes:', error));
 	}
+
 	#despliegaIngrediente(tmp,div,ingrediente){
 		let clone = tmp.content.cloneNode(true);		 
 		let element = clone.querySelector("#idArticulo");
@@ -96,6 +99,26 @@ class Ingrediente extends HTMLElement {
 		element.innerHTML=ingrediente.medida;
 		div.appendChild(clone);
 	}
+	
+	//utilizados para probar que la pagina si puede mostrar los 
+	//los datos de la api
+	// #consultaComentarios(postId,shadow){
+	// 	fetch(this.#urlService+postId+this.#urlComments)
+	// 	  .then(response => response.json())
+	// 	  .then(comments => {
+	// 		let div = shadow.querySelector("#bd");
+	// 		let tmp = shadow.querySelector("#tmpIngrediente");
+	// 		comments.forEach(c => this.#despliegaComentario(tmp,div,c));
+	// 	  });	
+	// }
+	// #despliegaComentario(tmp,div,comment){
+	// 	let clone = tmp.content.cloneNode(true);		 
+	// 	let element = clone.querySelector("#idArticulo");
+	// 	element.innerHTML=comment.email;
+	// 	element = clone.querySelector("#cantidadArticulo");
+	// 	element.innerHTML=comment.body;
+	// 	div.appendChild(clone);
+	// }
 }
 
 window.customElements.define('ingrediente-info', Ingrediente);
