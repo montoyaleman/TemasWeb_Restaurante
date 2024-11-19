@@ -24,6 +24,10 @@ app.use('/protegido', protectedRoutes);
 const errorHandler = require('./middlewares/errorHandler');
 app.use(errorHandler);
 
+
+const cors = require('cors');
+app.use(cors());
+
 const port = process.env.PORT;
 app.listen(port, () => {
   console.log(`Servidor en ejecución en el puerto ${port}`);

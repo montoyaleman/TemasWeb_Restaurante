@@ -2,8 +2,10 @@ const express = require('express');
 const router = express.Router();
 const ingredienteController = require('../models/ingrediente');
 const platilloController = require('../models/Platillo');
-const pedidoController = require('../models/Pedido')
-const usuarioController = require('../models/Usuario')
+const pedidoController = require('../models/Pedido');
+const usuarioController = require('../models/Usuario');
+const cors = require('cors');
+router.use(cors());
 
 // Rutas para los ingredientes
 
@@ -54,6 +56,7 @@ router.post('/usuario', usuarioController.addUsuario);
 router.put('/usuario/:id', usuarioController.updateUsuario);
 // Eliminar un usuario
 router.delete('/usuario/:id', usuarioController.deleteUsuario);
+
 
 
 module.exports = router;

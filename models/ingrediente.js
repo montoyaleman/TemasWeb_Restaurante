@@ -22,7 +22,7 @@ exports.getAllIngredientes = async (req, res) => {
       const restauranteData = await Ingrediente.find().exec(); 
       //mandamos como respuesta el codigo 200 y los ingredientes presentes
       res.status(200).json(restauranteData);
-      //mongoose.disconnect();
+      mongoose.disconnect();
     } catch (err) {
       console.log(err)
       res.status(500).json({ error: 'No se pudieron obtener los ingredientes' });
@@ -43,7 +43,7 @@ exports.getIngredienteById = async (req, res) => {
       if (!ingredienteData) res.status(404).json("No se encontro un ingrediente con ese ID.");
       //caso contrario, codigo 200 y mandamos los datos del ingrediente
       else res.status(200).json(ingredienteData);
-      //mongoose.disconnect();
+      mongoose.disconnect();
     } catch (err) {
       res.status(500).json({ error: 'No se pudo obtener el Ingrediente' });
     }
@@ -69,7 +69,7 @@ exports.addIngrediente = async (req, res) => {
       //codigo 201 siginifica que se guardo con exito, y mandamos
       //los datos del nuevo ingrediente
       res.status(201).json(newIngrediente);
-      //mongoose.disconnect();
+      mongoose.disconnect();
     } catch (err) {
       res.status(500).json({ error: 'No se pudo agregar el ingrediente' });
     }
@@ -88,6 +88,7 @@ exports.updateIngrediente = async (req, res) => {
       const updatedIngrediente = await Ingrediente.findOneAndUpdate(filter, update, { new: true });
       if (!updatedIngrediente) res.status(404).json("No se encontro un ingrediente con ese ID.");
       else res.status(200).json(updatedIngrediente);
+      mongoose.disconnect();
     } catch (err) {
       console.log(err)
       res.status(500).json({ error: 'No se pudo actualizar el ingrediente' });
@@ -102,6 +103,7 @@ exports.deleteIngrediente = async (req, res) => {
       const ingredienteEliminado = await Ingrediente.findOneAndDelete(filter);
       if (!ingredienteEliminado) res.status(404).json("No se encontro un ingrediente con ese ID.");
       else res.status(200).json({ message: 'Ingrediente eliminado exitosamente' });
+      mongoose.disconnect();
     } catch (err) {
       res.status(500).json({ error: 'No se pudo eliminar el ingrediente' });
     }
