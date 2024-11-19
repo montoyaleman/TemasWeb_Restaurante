@@ -23,7 +23,7 @@ class Navbar extends HTMLElement {
 					<a href="index.html" class="logo">Restaurante</a>
 					<a href="ingredientes.html">Ingredientes</a>
 					<a href="platillos.html">Platillos</a>
-					<a href="#">Pedidos</a>
+					<a href="pedido.html">Pedidos</a>
 					<a href="usuarios.html">Usuarios</a>
 				</div>
 			</nav>	
