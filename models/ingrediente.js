@@ -54,6 +54,9 @@ exports.addIngrediente = async (req, res) => {
     //en caso de que los datos mandados por el cliente no tienen los
     //datos exactos que necesitamos para agregar un ingrediente, se
     //cancela la insercion
+    console.log(req.body.nombre);
+    console.log(req.body.medida);
+    console.log(req.body.cantidad);
     if (!req.body.nombre || !req.body.medida || !req.body.cantidad) 
       return res.status(400).json("No se inserto valores correctos para un ingrediente");
     try {
@@ -82,7 +85,6 @@ exports.updateIngrediente = async (req, res) => {
       return res.status(400).json("Cantidad insertada no valido");
     const filter = { _id: req.params.id };
     const update = { cantidad: req.params.cantidad };
-    
     try {
       await connectarMongoose();
       const updatedIngrediente = await Ingrediente.findOneAndUpdate(filter, update, { new: true });

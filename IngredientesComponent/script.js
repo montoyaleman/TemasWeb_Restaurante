@@ -25,8 +25,9 @@ function eliminarIngrediente(){
         })
         .then(data => {
             alert(`Ingrediente con ID ${id} eliminado correctamente.`);
-            ingredienteInfo.shadowRoot.querySelector("#bd").innerHTML = '';
-            ingredienteInfo.connectedCallback();
+            // ingredienteInfo.shadowRoot.querySelector("#bd").innerHTML = '';
+            // ingredienteInfo.connectedCallback();
+            location.reload();
         })
         .catch(error => {
             console.error('Error al eliminar el ingrediente:', error);
@@ -34,10 +35,18 @@ function eliminarIngrediente(){
         });
     }  
 }
-function agregarIngrediente(){    
+async function agregarIngrediente(){    
     const nombreIng = txtNombre.value.trim();
     const cantidadIng = txtCantidad.value.trim();
     const medidaIng = txtMedida.value.trim();
+
+
+    const ing = JSON.stringify({
+        nombre: nombreIng,
+        medida: medidaIng,
+        cantidad: cantidadIng
+    });
+    console.log(ing)
 
     if (!nombreIng || !cantidadIng || !medidaIng){
         alert('Por favor de Insertar todos los datos necesarios');
@@ -46,24 +55,24 @@ function agregarIngrediente(){
     else {
         fetch(`http://localhost:3000/api/v1/ingrediente/`, {
             method: "POST",
-            body: JSON.stringify({
-                nombre: nombreIng,
-                medida: medidaIng,
-                cantidad: cantidadIng
-            })
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: ing
         })
         .then(response => {
             console.log('Estado de la respuesta:', response.status);
             if (!response.ok) {
                 throw new Error(`Error HTTP: ${response.status}`);
             }
-            clear();
+            
             return response.json();
         })
         .then(data => {
             alert(`Ingrediente agregado correctamente.`);
-            ingredienteInfo.shadowRoot.querySelector("#bd").innerHTML = '';
-            ingredienteInfo.connectedCallback();
+            // ingredienteInfo.shadowRoot.querySelector("#bd").innerHTML = '';
+            // ingredienteInfo.connectedCallback();
+            location.reload();
         })
         .catch(error => {
             console.error('Error al agregar el ingrediente:', error);
@@ -75,14 +84,15 @@ function agregarIngrediente(){
 
 function actualizarIngrediente(){    
     const id = txtId.value.trim();
-    if (!id) {
-        alert('Por favor, inserte un ID para actualizar.');
+    const cantidad = txtCantidad.value.trim();
+    if (!id || !cantidad) {
+        alert('Por favor, inserte un ID y Cantidad para actualizar.');
         return;
     }
 
     const result = confirm(`¿Estás seguro de actualizar el ingrediente con ID ${id}?`);
     if (result) {
-        fetch(`http://localhost:3000/api/v1/ingrediente/${id}`, {
+        fetch(`http://localhost:3000/api/v1/ingrediente/${id}/${cantidad}`, {
             method: 'PUT',
         })
         .then(response => {
@@ -93,9 +103,10 @@ function actualizarIngrediente(){
         })
         .then(data => {
             alert(`Ingrediente con ID ${id} actualizado correctamente.`);
-            clear();
-            ingredienteInfo.shadowRoot.querySelector("#bd").innerHTML = '';
-            ingredienteInfo.connectedCallback();
+            // clear();
+            // ingredienteInfo.shadowRoot.querySelector("#bd").innerHTML = '';
+            // ingredienteInfo.connectedCallback();
+            location.reload();
         })
         .catch(error => {
             console.error('Error al actualizar el ingrediente:', error);
@@ -105,7 +116,7 @@ function actualizarIngrediente(){
 }
 
 function buscarIngredientePorID(){    
-    const id = txtId.value;
+    const id = txtId.value.trim();
     if (!id) {
         alert('Por favor, inserte un ID para buscar.');
         return;
@@ -132,8 +143,7 @@ function buscarIngredientePorID(){
     }    
 }
 function buscarIngrediente(){
-    ingredienteInfo.shadowRoot.querySelector("#bd").innerHTML = '';
-    ingredienteInfo.connectedCallback();
+    location.reload();
 }
 function clear(){    
     txtId.value = '';
