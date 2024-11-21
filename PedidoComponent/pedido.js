@@ -82,8 +82,11 @@ class Pedido extends HTMLElement {
 
     #despliegaPedido(tmp, div, pedido) {
         let clone = tmp.content.cloneNode(true);
+
+        let element = clone.querySelector("#idArticulo");
+        element.innerHTML = pedido._id;
         
-        let element = clone.querySelector("#fechaArticulo");
+        element = clone.querySelector("#fechaArticulo");
         element.innerHTML = pedido.fecha;
 
         element = clone.querySelector("#idUsuarioArticulo");
