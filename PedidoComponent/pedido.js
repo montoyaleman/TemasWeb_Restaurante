@@ -17,7 +17,7 @@ class Pedido extends HTMLElement {
     #agregaEstilo(shadow) {
         let link = document.createElement("link");
         link.setAttribute("rel", "stylesheet");
-        link.setAttribute("href", "./PedidoComponent/css/Pedido.css");
+        link.setAttribute("href", "./PedidoComponent/css/pedido.css");
         shadow.appendChild(link);
     }
 
@@ -38,10 +38,10 @@ class Pedido extends HTMLElement {
                 <input type="text" id="txtTotal">
             </div>
             <div class="botones">
-                <button id="btnCrear">Crear</button>
-                <button id="btnActualizar">Actualizar</button>
-                <button id="btnEliminar">Eliminar</button>
-                <button id="btnBuscarTodos">Buscar Todos</button>
+                <button type="button" class="boton-1" id="btnCrear" onClick="crearPedido()">Crear </button>
+                <button type="button" class="boton-1" id="btnActualizar" onClick="actualizarPedido()">Actualizar</button>
+                <button type="button" class="boton-1" id="btnEliminar" onClick="eliminarPedido()">Eliminar</button>
+                <button type="button" class="boton-1" class="buttonid="btnBuscarTodos">Buscar Todos</button>
             </div>
             <div id="bd"></div>
             <template id="tmpPedido">
@@ -75,8 +75,8 @@ class Pedido extends HTMLElement {
                 let select = shadow.querySelector("#selectUsuarios");
                 ingredientes.forEach(usuario => {
                     let option = document.createElement("option");
-                    option.value = usuario._id; // ID del ingrediente
-                    option.textContent = `${usuario._id}`; // Nombre y medida del ingrediente
+                    option.value = usuario._id; 
+                    option.textContent = `${usuario._id}`; 
                     select.appendChild(option);
                 });
             })
