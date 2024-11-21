@@ -12,9 +12,9 @@ function agregarUsuario() {
 
     const usuario = JSON.stringify({
         username,
-        password: pw,
+        pw,
         name,
-        rol: role,
+        role,
     });
 
     if (!username || !pw || !name || !role) {
@@ -115,12 +115,12 @@ function eliminarUsuario() {
 }
 
 function buscarUsuarioPorId() {
-    const username = txtUsername.value.trim(); // Consideramos "username" como el ID.
-    if (!username) {
-        alert('Por favor, inserte un ID (Username) para buscar.');
+    const objectId = txtUsername.value.trim(); // Se asume que el ObjectId está en este campo.
+    if (!objectId) {
+        alert('Por favor, inserte un ObjectId para buscar.');
         return;
     } else {
-        fetch(`http://localhost:3000/api/v1/usuario/${username}`, {
+        fetch(`http://localhost:3000/api/v1/usuario/${objectId}`, {
             method: 'GET',
         })
         .then(async response => {
@@ -129,12 +129,19 @@ function buscarUsuarioPorId() {
                 throw new Error(`Error HTTP: ${response.status}`);
             }
 
-            const res = await response.json();
-            txtUsername.value = res[0].username;
-            txtPassword.value = ''; // Por seguridad, no mostramos la contraseña
-            txtNombre.value = res[0].name;
-            txtRol.value = res[0].rol;
-            return res;
+            const usuario = await response.json();
+
+            if (!usuario) {
+                alert('No se encontró un usuario con el ObjectId especificado.');
+                return;
+            }
+
+            txtUsername.value = usuario._id; // Asignamos el ObjectId al campo correspondiente.
+            txtPassword.value = ''; // Por seguridad, no mostramos la contraseña.
+            txtNombre.value = usuario.name;
+            txtRol.value = usuario.role;
+
+            return usuario;
         })
         .catch(error => {
             console.error('Error al buscar el usuario:', error);
