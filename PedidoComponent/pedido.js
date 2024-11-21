@@ -27,15 +27,17 @@ class Pedido extends HTMLElement {
         <section class="container">
             <div class="item">
                 <div class="input">
-                    <p>Fecha del Pedido</p>
+                    <h2>ID</h2>
+                    <input type="text" id="txtId>
+                    <h2>Fecha del Pedido</h2>
                     <input type="date" id="txtFecha">
-                    <p>ID del Usuario</p>
+                    <h2>ID del Usuario</h2>
                     <input type="text" id="txtIdUsuario">
-                    <p>Mesa</p>
+                    <h2>Mesa</h2>
                     <input type="number" id="txtMesa">
-                    <p>Orden</p>
+                    <h2>Orden</h2>
                     <input type="text" id="txtOrden">
-                    <p>Precio Total</p>
+                    <h2>Precio Total</h2>
                     <input type="text" id="txtTotal">
                 </div>
                 <div class="botones">
