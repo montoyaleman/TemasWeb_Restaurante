@@ -34,7 +34,7 @@ function eliminarPedido(){
         });
     }  
 }
-async function agregarPedido(){    
+async function crearPedido(){    
     const fechaPedido = txtFecha.value.trim();
     const idUsuarioPedido = txtIdUsuario.value.trim();
     const mesaPedido = txtMesa.value.trim();
