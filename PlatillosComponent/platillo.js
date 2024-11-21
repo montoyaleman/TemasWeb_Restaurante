@@ -23,30 +23,35 @@ class Platillo extends HTMLElement {
 
     #render(shadow) {
         shadow.innerHTML += `
-        <section class="platillos">
-            <h1>Gestión de Platillos</h1>
+        <div> <h1>Gestión de Platillos</h1> </div>
+        <section class="platillos container">
+        <div class="item">
             <div class="input">
-                <p>Nombre</p>
+                <h2 class="textosDetalles">Nombre</h2>
                 <input type="text" id="txtNombre">
-                <p>Tipo</p>
+                <h2 class="textosDetalles">Tipo</h2>
                 <input type="text" id="txtTipo">
-                <p>Descripción</p>
+                <h2 class="textosDetalles">Descripción</h2>
                 <input type="text" id="txtDescripcion">
-                <p>Cantidad</p>
+                <h2 class="textosDetalles">Cantidad</h2>
                 <input type="number" id="txtCantidad">
-                <p>Precio</p>
+                <h2 class="textosDetalles">Precio</h2>
                 <input type="number" id="txtPrecio">
-                <p>Ingredientes</p>
+                <h2 class="textosDetalles">Ingredientes</h2>
                 <select id="selectIngredientes" multiple></select>
             </div>
             <div class="botones">
-                <button id="btnAgregar">Agregar</button>
-                <button id="btnActualizar">Actualizar</button>
-                <button id="btnEliminar">Eliminar</button>
-                <button id="btnBuscarTodos">Buscar Todos</button>
-                <button id="btnBuscarID">Buscar por ID</button>
+                <button type="button" class="button-1" id="btnAgregar" onClick="agregarPlatillo()">Agregar</button>
+					<button type="button" class="button-1" id="btnActualizar" onClick="actualizarPlatillo()">Actualizar</button>
+					<button type="button" class="button-1" id="btnEliminar" onClick="eliminarPlatillo()">Eliminar</button>
+					<br>
+					<button type="button" class="button-1" id="btnBuscar" onClick="buscarPlatillo()">Buscar Todos</button>
+					<button type="button" class="button-1" id="btnBuscarID" onClick="buscarPlatilloPorID()">Buscar por ID</button>
             </div>
-            <div id="bd"></div>
+        </div>
+        <div class="item">
+            <div id="bd">
+            </div>
             <template id="tmpPlatillo">
                 <div class="articuloBd">
                     <p><b id="nombreArticulo"></b> - <b id="tipoArticulo"></b></p>
@@ -56,22 +61,30 @@ class Platillo extends HTMLElement {
                     <p>Ingredientes: <span id="ingredientesArticulo"></span></p>
                 </div>
             </template>
+            </div>
         </section>`;
 
         
         shadow.querySelector("#btnAgregar").addEventListener("click", () => this.#agregarPlatillo(shadow));
     }
 
-    #consultaPlatillos(shadow) {
-        fetch(this.#urlService)
-            .then(response => response.json())
-            .then(platillos => {
-                let div = shadow.querySelector("#bd");
-                let tmp = shadow.query .querySelector("#tmpPlatillo");
-                platillos.forEach(p => this.#despliegaPlatillo(tmp, div, p));
-            })
-            .catch(err => console.error('Error fetching platillos:', err));
-    }
+    #consultaPlatillos(shadow){
+		fetch(this.#urlService)
+		.then(response => {
+			console.log('Estado de la respuesta:', response.status);
+			if (!response.ok) {
+				throw new Error(`Error HTTP: ${response.status}`);
+			}
+			return response.json();
+		})
+		.then(data => {
+			console.log('Datos recibidos:', data);
+			let div = shadow.querySelector("#bd");
+			let tmp = shadow.querySelector("#tmpPlatillo");
+			data.forEach(c => this.#despliegaPlatillo(tmp, div, c));
+		})
+		.catch(error => console.error('Error al obtener Platillos:', error));
+	}
 
     #consultaIngredientes(shadow) {
         fetch(this.#urlIngredientService)
