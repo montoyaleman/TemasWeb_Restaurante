@@ -15,38 +15,45 @@ class Usuario extends HTMLElement {
     #agregaEstilo(shadow) {
         let link = document.createElement("link");
         link.setAttribute("rel", "stylesheet");
-        link.setAttribute("href", "./UsuarioComponent/css/usuario.css");
+        link.setAttribute("type", "text/css");
+        link.setAttribute("href", "./UsuariosComponent/css/usuario.css");
         shadow.appendChild(link);
     }
 
     #render(shadow) {
         shadow.innerHTML += `
-        <section class="usuarios">
-            <h1>Gestión de Usuarios</h1>
-            <div class="input">
-                <p>Nombre de usuario</p>
-                <input type="text" id="txtUsername">
-                <p>Contraseña</p>
-                <input type="password" id="txtPassword">
-                <p>Nombre</p>
-                <input type="text" id="txtNombre">
-                <p>Rol</p>
-                <input type="number" id="txtRol">
-            </div>
-            <div class="botones">
-                <button id="btnAgregar">Agregar</button>
-                <button id="btnActualizar">Actualizar</button>
-                <button id="btnEliminar">Eliminar</button>
-                <button id="btnBuscarTodos">Buscar Todos</button>
-                <button id="btnBuscarID">Buscar por ID</button>
-            </div>
-            <div id="bd"></div>
-            <template id="tmpUsuario">
-                <div class="articuloBd">
-                    <p><b id="usernameArticulo"></b> - <b id="nombreArticulo"></b></p>
-                    <p>Rol: <span id="rolArticulo"></span></p>
+        <div><h1>Gestión de Usuarios</h1></div>
+        <section class="container">            
+            <div class="item">
+                <div class="input">
+                    <p>Nombre de usuario</p>
+                    <input type="text" id="txtUsername">
+                    <p>Contraseña</p>
+                    <input type="password" id="txtPassword">
+                    <p>Nombre</p>
+                    <input type="text" id="txtNombre">
+                    <p>Rol</p>
+                    <input type="number" id="txtRol">
                 </div>
-            </template>
+                    <div class="botones">
+                    <button class="button-1" id="btnAgregar">Agregar</button>
+                    <button class="button-1" id="btnActualizar">Actualizar</button>
+                    <button class="button-1" id="btnEliminar">Eliminar</button>
+                    <br>
+                    <button class="button-1" id="btnBuscarTodos">Buscar Todos</button>
+                    <button class="button-1" id="btnBuscarID">Buscar por ID</button>
+                </div>
+            </div>
+            
+            <div class="item">
+                <div id="bd"></div>
+                <template id="tmpUsuario">
+                    <div class="articuloBd">
+                        <p><b id="usernameArticulo"></b> - <b id="nombreArticulo"></b></p>
+                        <p>Rol: <span id="rolArticulo"></span></p>
+                    </div>
+                </template>
+            </div>
         </section>`;
     }
 

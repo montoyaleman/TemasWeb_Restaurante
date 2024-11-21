@@ -24,7 +24,6 @@ app.use('/protegido', protectedRoutes);
 const errorHandler = require('./middlewares/errorHandler');
 app.use(errorHandler);
 
-
 const cors = require('cors');
 app.use(cors());
 
