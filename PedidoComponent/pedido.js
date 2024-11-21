@@ -1,7 +1,6 @@
 class Pedido extends HTMLElement {
     #urlService = 'http://localhost:3000/api/v1/pedido/';
-    #urlUsuarioService ='https://localhost:3000/api/v1/usuario/';
-
+    
     constructor() {
         super();
     }
@@ -77,21 +76,6 @@ class Pedido extends HTMLElement {
                 pedidos.forEach(u => this.#despliegaPedido(tmp, div, u));
             })
             .catch(err => console.error('Error fetching pedidos:', err));
-    }
-
-    #consultaUsuarios(shadow) {
-        fetch(this.#urlUsuarioService)
-            .then(response => response.json())
-            .then(ingredientes => {
-                let select = shadow.querySelector("#selectUsuarios");
-                ingredientes.forEach(usuario => {
-                    let option = document.createElement("option");
-                    option.value = usuario._id; 
-                    option.textContent = `${usuario._id}`; 
-                    select.appendChild(option);
-                });
-            })
-            .catch(err => console.error('Error fetching usuarios:', err));
     }
 
     #despliegaPedido(tmp, div, pedido) {

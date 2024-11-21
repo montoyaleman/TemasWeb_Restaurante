@@ -116,7 +116,7 @@ function actualizarIngrediente(){
 }
 
 
-function buscarIngrediente(){
+function buscarPedido(){
     location.reload();
 }
 
