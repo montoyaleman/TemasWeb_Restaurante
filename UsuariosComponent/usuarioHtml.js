@@ -21,30 +21,32 @@ class Usuario extends HTMLElement {
     }
 
     #render(shadow) {
-        shadow.innerHTML += `
+        shadow.innerHTML = `
         <div><h1>Gestión de Usuarios</h1></div>
-        <section class="container">            
+        <section class="usuarios container">
             <div class="item">
                 <div class="input">
-                    <p>Nombre de usuario</p>
+                    <h2 class="textosDetalles">Nombre de usuario</h2>
                     <input type="text" id="txtUsername">
-                    <p>Contraseña</p>
+
+                    <h2 class="textosDetalles">Contraseña</h2>
                     <input type="password" id="txtPassword">
-                    <p>Nombre</p>
+
+                    <h2 class="textosDetalles">Nombre</h2>
                     <input type="text" id="txtNombre">
-                    <p>Rol</p>
+
+                    <h2 class="textosDetalles">Rol</h2>
                     <input type="number" id="txtRol">
                 </div>
-                    <div class="botones">
-                    <button class="button-1" id="btnAgregar">Agregar</button>
-                    <button class="button-1" id="btnActualizar">Actualizar</button>
-                    <button class="button-1" id="btnEliminar">Eliminar</button>
+                <div class="botones">
+                    <button type="button" class="button-1" id="btnAgregar">Agregar</button>
+                    <button type="button" class="button-1" id="btnActualizar">Actualizar</button>
+                    <button type="button" class="button-1" id="btnEliminar">Eliminar</button>
                     <br>
-                    <button class="button-1" id="btnBuscarTodos">Buscar Todos</button>
-                    <button class="button-1" id="btnBuscarID">Buscar por ID</button>
+                    <button type="button" class="button-1" id="btnBuscarTodos">Buscar Todos</button>
+                    <button type="button" class="button-1" id="btnBuscarID">Buscar por ID</button>
                 </div>
             </div>
-            
             <div class="item">
                 <div id="bd"></div>
                 <template id="tmpUsuario">
@@ -54,7 +56,18 @@ class Usuario extends HTMLElement {
                     </div>
                 </template>
             </div>
-        </section>`;
+        </section>
+        `;
+
+        this.#agregarEventListeners(shadow);
+    }
+
+    #agregarEventListeners(shadow) {
+        shadow.querySelector("#btnAgregar").addEventListener("click", () => agregarUsuario);
+        shadow.querySelector("#btnActualizar").addEventListener("click", () => actualizarUsuario);
+        shadow.querySelector("#btnEliminar").addEventListener("click", () => eliminarUsuario);
+        shadow.querySelector("#btnBuscarTodos").addEventListener("click", () => consultarUsuarios);
+        shadow.querySelector("#btnBuscarID").addEventListener("click", () => buscarUsuarioPorId);
     }
 
     #consultaUsuarios(shadow) {

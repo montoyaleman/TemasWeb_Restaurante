@@ -114,10 +114,10 @@ function eliminarUsuario() {
     }
 }
 
-function buscarUsuarioPorUsername() {
-    const username = txtUsername.value.trim();
+function buscarUsuarioPorId() {
+    const username = txtUsername.value.trim(); // Consideramos "username" como el ID.
     if (!username) {
-        alert('Por favor, inserte un Username para buscar.');
+        alert('Por favor, inserte un ID (Username) para buscar.');
         return;
     } else {
         fetch(`http://localhost:3000/api/v1/usuario/${username}`, {
@@ -141,6 +141,10 @@ function buscarUsuarioPorUsername() {
             alert('Ocurrió un error al buscar el usuario.');
         });
     }
+}
+
+function consultarUsuarios(){
+    location.reload();
 }
 
 function limpiarCamposUsuario() {

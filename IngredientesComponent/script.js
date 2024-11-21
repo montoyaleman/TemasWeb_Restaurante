@@ -142,6 +142,7 @@ function buscarIngredientePorID(){
         })        
     }    
 }
+
 function buscarIngrediente(){
     location.reload();
 }
