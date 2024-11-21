@@ -41,7 +41,7 @@ class Pedido extends HTMLElement {
                 <button type="button" class="boton-1" id="btnCrear" onClick="crearPedido()">Crear </button>
                 <button type="button" class="boton-1" id="btnActualizar" onClick="actualizarPedido()">Actualizar</button>
                 <button type="button" class="boton-1" id="btnEliminar" onClick="eliminarPedido()">Eliminar</button>
-                <button type="button" class="boton-1" class="buttonid="btnBuscarTodos">Buscar Todos</button>
+                <button type="button" class="boton-1" id="btnBuscarTodos" onClick="listarPedido()">Buscar Todos</button>
             </div>
             <div id="bd"></div>
             <template id="tmpPedido">
@@ -85,6 +85,7 @@ class Pedido extends HTMLElement {
 
     #despliegaPedido(tmp, div, pedido) {
         let clone = tmp.content.cloneNode(true);
+        
         let element = clone.querySelector("#fechaArticulo");
         element.innerHTML = pedido.fecha;
 
