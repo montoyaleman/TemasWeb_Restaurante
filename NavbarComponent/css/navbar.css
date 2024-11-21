@@ -1,10 +1,15 @@
 nav {
-	background-color: #343a40;
+	background-color: #FF4C45;
 	color: white;
 	padding: 1em;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+}
+
+nav .logo{
+	font-weight: 600;
+	padding-right: 40px;
 }
 
 nav .nav-left, nav .nav-right {
@@ -21,11 +26,6 @@ nav .nav-left a {
 
 nav .nav-left a:hover {
 	color: #cccccc;
-}
-
-nav .search-bar {
-	display: flex;
-	align-items: center;
 }
 
 nav input[type="text"] {

@@ -1,6 +1,6 @@
 class Pedido extends HTMLElement {
     #urlService = 'http://localhost:3000/api/v1/pedido/';
-    #urlUsuarioService ='https://localhost:300/api/v1/pedido';
+    #urlUsuarioService ='https://localhost:3000/api/v1/usuario/';
 
     constructor() {
         super();
@@ -11,7 +11,7 @@ class Pedido extends HTMLElement {
         this.#agregaEstilo(shadow);
         this.#render(shadow);
         this.#consultaPedido(shadow);
-        this.#consultaUsuarios(shadow);
+        //this.#consultaUsuarios(shadow);
     }
 
     #agregaEstilo(shadow) {
@@ -29,29 +29,34 @@ class Pedido extends HTMLElement {
                 <div class="input">
                     <h2 class="textosDetalles">ID</h2>
                     <input type="text" id="txtId>
+
                     <h2 class="textosDetalles">Fecha del Pedido</h2>
                     <input type="date" id="txtFecha">
+
                     <h2 class="textosDetalles">ID del Usuario</h2>
                     <input type="text" id="txtIdUsuario">
+
                     <h2 class="textosDetalles">Mesa</h2>
                     <input type="number" id="txtMesa">
+
                     <h2 class="textosDetalles">Orden</h2>
                     <input type="text" id="txtOrden">
+                    
                     <h2 class="textosDetalles">Precio Total</h2>
                     <input type="text" id="txtTotal">
                 </div>
                 <div class="botones">
-                    <button type="button" class="boton-1" id="btnCrear" onClick="crearPedido()">Crear </button>
-                    <button type="button" class="boton-1" id="btnActualizar" onClick="actualizarPedido()">Actualizar</button>
-                    <button type="button" class="boton-1" id="btnEliminar" onClick="eliminarPedido()">Eliminar</button>
-                    <button type="button" class="boton-1" id="btnBuscarTodos" onClick="listarPedido()">Buscar Todos</button>
+                    <button type="button" class="button-1" id="btnCrear" onClick="crearPedido()">Crear </button>
+                    <button type="button" class="button-1" id="btnActualizar" onClick="actualizarPedido()">Actualizar</button>
+                    <button type="button" class="button-1" id="btnEliminar" onClick="eliminarPedido()">Eliminar</button>
+                    <button type="button" class="button-1" id="btnBuscarTodos" onClick="listarPedido()">Buscar Todos</button>
                 </div>
             </div>
             <div class="item">
                 <div id="bd"></div>
                     <template id="tmpPedido">
                         <div class="articuloBd">
-                            <p><b id="idArticulo"></b>
+                            <p><b id="idArticulo"></b></p>
                             <p>Fecha: <span id="fechaArticulo"></span></p>
                             <p>Id de Usuario: <span id="idUsuarioArticulo"></span></p>
                             <p>Mesa: <span id="mesaArticulo"></span></p>
@@ -91,8 +96,11 @@ class Pedido extends HTMLElement {
 
     #despliegaPedido(tmp, div, pedido) {
         let clone = tmp.content.cloneNode(true);
+
+        let element = clone.querySelector("#idArticulo");
+        element.innerHTML = pedido._id;
         
-        let element = clone.querySelector("#fechaArticulo");
+        element = clone.querySelector("#fechaArticulo");
         element.innerHTML = pedido.fecha;
 
         element = clone.querySelector("#idUsuarioArticulo");

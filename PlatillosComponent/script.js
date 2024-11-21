@@ -80,6 +80,7 @@ function actualizarPlatillo() {
         return;
     }
 
+
     const platilloActualizado = {
         nombre: txtNombre.value.trim(),
         tipo: txtTipo.value.trim(),
@@ -127,7 +128,7 @@ function buscarPlatilloPorID() {
     .then(data => {
         txtNombre.value = data.nombre;
         txtTipo.value = data.tipo;
-        txtDescripcion.value = data.descripcion;
+        txtDescripcion.value = data.desc;
         txtCantidad.value = data.cantidad;
         txtPrecio.value = data.precio;
 

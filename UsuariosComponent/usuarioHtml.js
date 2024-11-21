@@ -26,15 +26,15 @@ class Usuario extends HTMLElement {
         <section class="container">            
             <div class="item">
                 <div class="input">
-                    <p>ID</p>
+                    <h2>ID</h2>
                     <input type="text" id="txtId">
-                    <p>Nombre de usuario</p>
+                    <h2>Nombre de usuario</h2>
                     <input type="text" id="txtUsername">
-                    <p>Contraseña</p>
+                    <h2>Contraseña</h2>
                     <input type="password" id="txtPassword">
-                    <p>Nombre</p>
+                    <h2>Nombre</h2>
                     <input type="text" id="txtNombre">
-                    <p>Rol</p>
+                    <h2>Rol</h2>
                     <input type="number" id="txtRol">
                 </div>
                     <div class="botones">

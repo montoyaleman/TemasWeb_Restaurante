@@ -25,7 +25,7 @@ router.delete('/ingrediente/:id', ingredienteController.deleteIngrediente);
 // get all platillos
 router.get('/platillo', platilloController.getAllPlatillos);
 //get platillo por id
-router.get('/platillos/:id', platilloController.getPlatilloById);
+router.get('/platillo/:id', platilloController.getPlatilloById);
 //insertar platillos
 router.post('/platillo', platilloController.addPlatillo);
 //update
