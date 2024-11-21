@@ -74,7 +74,7 @@ exports.addUsuario = async (req, res) => {
 // Actualizar un usuario
 exports.updateUsuario = async (req, res) => {
     const usuarioId = req.params.id;
-    const { username, pw, name, role } = req.body;
+    const {username, pw, name, role} = req.body;
     try {
       await connectarMongoose();
       const updatedUsuario = await Usuario.findByIdAndUpdate(

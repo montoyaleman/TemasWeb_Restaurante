@@ -44,6 +44,11 @@ exports.getPlatilloById = async (req, res) => {
 };
 
 exports.addPlatillo = async (req, res) => {
+  console.log(req.body.nombre);
+  console.log(req.body.tipo);
+  console.log(req.body.desc);
+  console.log(req.body.cantidad);
+  console.log(req.body.precio);
   if (!req.body.nombre || !req.body.tipo || !req.body.desc || !req.body.cantidad || !req.body.precio) 
     return res.status(400).json("No se insertaron valores correctos para un platillo");
   try {

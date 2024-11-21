@@ -26,6 +26,8 @@ class Usuario extends HTMLElement {
         <section class="container">            
             <div class="item">
                 <div class="input">
+                    <p>ID</p>
+                    <input type="text" id="txtId">
                     <p>Nombre de usuario</p>
                     <input type="text" id="txtUsername">
                     <p>Contraseña</p>
@@ -50,6 +52,7 @@ class Usuario extends HTMLElement {
                 <div id="bd"></div>
                 <template id="tmpUsuario">
                     <div class="articuloBd">
+                        <p><b id="idArticulo"></b></p>
                         <p><b id="usernameArticulo"></b> - <b id="nombreArticulo"></b></p>
                         <p>Rol: <span id="rolArticulo"></span></p>
                     </div>
@@ -71,7 +74,10 @@ class Usuario extends HTMLElement {
 
     #despliegaUsuario(tmp, div, usuario) {
         let clone = tmp.content.cloneNode(true);
-        let element = clone.querySelector("#usernameArticulo");
+        let element = clone.querySelector("#idArticulo");
+        element.innerHTML = usuario._id;
+
+        element = clone.querySelector("#usernameArticulo");
         element.innerHTML = usuario.username;
 
         element = clone.querySelector("#nombreArticulo");

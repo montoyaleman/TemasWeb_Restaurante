@@ -28,7 +28,9 @@ function eliminarPlatillo() {
         })
         .then(data => {
             alert(`Platillo con ID ${id} eliminado correctamente.`);
-            platilloInfo.#consultaPlatillos(platilloInfo.shadowRoot);
+            // platilloInfo.#consultaPlatillos(platilloInfo.shadowRoot);
+            location.reload();
+
         })
         .catch(error => {
             console.error('Error al eliminar el platillo:', error);
@@ -38,16 +40,17 @@ function eliminarPlatillo() {
 }
 
 async function agregarPlatillo() {
+    console.log(txtDescripcion.value.trim());
     const nuevoPlatillo = {
         nombre: txtNombre.value.trim(),
         tipo: txtTipo.value.trim(),
-        descripcion: txtDescripcion.value.trim(),
+        desc: txtDescripcion.value.trim(),
         cantidad: parseInt(txtCantidad.value),
         precio: parseFloat(txtPrecio.value),
         ingredientes: Array.from(selectIngredientes.selectedOptions).map(option => option.value)
     };
 
-    if (!nuevoPlatillo.nombre || !nuevoPlatillo.tipo || !nuevoPlatillo.descripcion || isNaN(nuevoPlatillo.cantidad) || isNaN(nuevoPlatillo.precio)) {
+    if (!nuevoPlatillo.nombre || !nuevoPlatillo.tipo || !nuevoPlatillo.desc || isNaN(nuevoPlatillo.cantidad) || isNaN(nuevoPlatillo.precio)) {
         alert('Por favor de insertar todos los datos necesarios');
         return;
     }
@@ -62,7 +65,8 @@ async function agregarPlatillo() {
         });
         const data = await response.json();
         alert(`Platillo agregado correctamente.`);
-        platilloInfo.#consultaPlatillos(platilloInfo.shadowRoot);
+        //platilloInfo.#consultaPlatillos(platilloInfo.shadowRoot);
+        location.reload();
     } catch (error) {
         console.error('Error al agregar el platillo:', error);
         alert('Ocurrió un error al agregar el platillo.');
@@ -95,7 +99,8 @@ function actualizarPlatillo() {
     .then(response => response.json())
     .then(data => {
         alert(`Platillo con ID ${id} actualizado correctamente.`);
-        platilloInfo.#consultaPlatillos(platilloInfo.shadowRoot);
+        //platilloInfo.#consultaPlatillos(platilloInfo.shadowRoot);
+        location.reload();
     })
     .catch(err => {
         console.error('Error actualizando platillo:', err);

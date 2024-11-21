@@ -1,4 +1,5 @@
 const usuarioInfo = document.querySelector('usuario-info');
+const txtId = usuarioInfo.shadowRoot.querySelector('#txtId');
 const txtUsername = usuarioInfo.shadowRoot.querySelector('#txtUsername');
 const txtPassword = usuarioInfo.shadowRoot.querySelector('#txtPassword');
 const txtNombre = usuarioInfo.shadowRoot.querySelector('#txtNombre');
@@ -47,21 +48,27 @@ function agregarUsuario() {
 }
 
 function actualizarUsuario() {
+    const id = txtId.value.trim()
     const username = txtUsername.value.trim();
     const password = txtPassword.value.trim();
     const name = txtNombre.value.trim();
     const rol = txtRol.value.trim();
 
-    if (!username || (!password && !name && !rol)) {
-        alert('Por favor, inserte el Username y al menos un campo para actualizar.');
+    if (!id) {
+        alert('Por favor, inserte el Id y al menos un campo para actualizar.');
         return;
     }
 
+    // if (!username || (!password && !name && !rol)) {
+    //     alert('Por favor, inserte el Username y al menos un campo para actualizar.');
+    //     return;
+    // }
+
     const updates = JSON.stringify({ password, name, rol });
 
-    const result = confirm(`¿Estás seguro de actualizar el usuario con Username ${username}?`);
+    const result = confirm(`¿Estás seguro de actualizar el usuario con el ID ${id}?`);
     if (result) {
-        fetch(`http://localhost:3000/api/v1/usuario/${username}`, {
+        fetch(`http://localhost:3000/api/v1/usuario/${id}`, {
             method: 'PUT',
             headers: {
                 "Content-Type": "application/json",
@@ -86,15 +93,15 @@ function actualizarUsuario() {
 }
 
 function eliminarUsuario() {
-    const username = txtUsername.value.trim();
-    if (!username) {
-        alert('Por favor, inserte un Username para eliminar.');
+    const id = txtId.value.trim();
+    if (!id) {
+        alert('Por favor, inserte un id para eliminar.');
         return;
     }
 
-    const result = confirm(`¿Estás seguro de borrar el usuario con Username ${username}?`);
+    const result = confirm(`¿Estás seguro de borrar el usuario con Username ${id}?`);
     if (result) {
-        fetch(`http://localhost:3000/api/v1/usuario/${username}`, {
+        fetch(`http://localhost:3000/api/v1/usuario/${id}`, {
             method: 'DELETE',
         })
         .then(response => {
@@ -104,7 +111,7 @@ function eliminarUsuario() {
             return response.json();
         })
         .then(data => {
-            alert(`Usuario con Username ${username} eliminado correctamente.`);
+            alert(`Usuario con Username ${id} eliminado correctamente.`);
             location.reload();
         })
         .catch(error => {
@@ -115,7 +122,7 @@ function eliminarUsuario() {
 }
 
 function buscarUsuarioPorId() {
-    const objectId = txtUsername.value.trim(); // Se asume que el ObjectId está en este campo.
+    const objectId = txtId.value.trim(); // Se asume que el ObjectId está en este campo.
     if (!objectId) {
         alert('Por favor, inserte un ObjectId para buscar.');
         return;
@@ -136,7 +143,7 @@ function buscarUsuarioPorId() {
                 return;
             }
 
-            txtUsername.value = usuario._id; // Asignamos el ObjectId al campo correspondiente.
+            txtUsername.value = usuario.username; // Asignamos el ObjectId al campo correspondiente.
             txtPassword.value = ''; // Por seguridad, no mostramos la contraseña.
             txtNombre.value = usuario.name;
             txtRol.value = usuario.role;
