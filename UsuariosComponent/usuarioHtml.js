@@ -36,12 +36,13 @@ class Usuario extends HTMLElement {
                     <input type="number" id="txtRol">
                 </div>
                     <div class="botones">
-                    <button class="button-1" id="btnAgregar">Agregar</button>
-                    <button class="button-1" id="btnActualizar">Actualizar</button>
-                    <button class="button-1" id="btnEliminar">Eliminar</button>
-                    <br>
-                    <button class="button-1" id="btnBuscarTodos">Buscar Todos</button>
-                    <button class="button-1" id="btnBuscarID">Buscar por ID</button>
+                        <button type="button" class="button-1" id="btnAgregar" onClick="agregarUsuario()">Agregar</button>
+                        <button type="button" class="button-1" id="btnActualizar" onClick="actualizarUsuario()">Actualizar</button>
+                        <button type="button" class="button-1" id="btnEliminar" onClick="eliminarUsuario()">Eliminar</button>
+                        <br>
+                        <button type="button" class="button-1" id="btnBuscarTodos" onClick="consultarUsuarios()">Buscar Todos</button>
+                        <button type="button" class="button-1" id="btnBuscarID" onClick="buscarUsuarioPorId()">Buscar por ID</button>
+                    </div>
                 </div>
             </div>
             

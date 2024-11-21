@@ -142,9 +142,11 @@ function buscarIngredientePorID(){
         })        
     }    
 }
+
 function buscarIngrediente(){
     location.reload();
 }
+
 function clear(){    
     txtId.value = '';
     txtCantidad.value = '';
