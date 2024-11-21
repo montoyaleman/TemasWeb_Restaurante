@@ -23,37 +23,41 @@ class Pedido extends HTMLElement {
 
     #render(shadow) {
         shadow.innerHTML += `
-        <section class="pedidos">
-            <h1>Gestión de Pedidos</h1>
-            <div class="input">
-                <p>Fecha del Pedido</p>
-                <input type="date" id="txtFecha">
-                <p>ID del Usuario</p>
-                <input type="text" id="txtIdUsuario">
-                <p>Mesa</p>
-                <input type="number" id="txtMesa">
-                <p>Orden</p>
-                <input type="text" id="txtOrden">
-                <p>Precio Total</p>
-                <input type="text" id="txtTotal">
-            </div>
-            <div class="botones">
-                <button type="button" class="boton-1" id="btnCrear" onClick="crearPedido()">Crear </button>
-                <button type="button" class="boton-1" id="btnActualizar" onClick="actualizarPedido()">Actualizar</button>
-                <button type="button" class="boton-1" id="btnEliminar" onClick="eliminarPedido()">Eliminar</button>
-                <button type="button" class="boton-1" id="btnBuscarTodos" onClick="listarPedido()">Buscar Todos</button>
-            </div>
-            <div id="bd"></div>
-            <template id="tmpPedido">
-                <div class="articuloBd">
-                    <p><b id="idArticulo"></b>
-                    <p>Fecha: <span id="fechaArticulo"></span></p>
-                    <p>Id de Usuario: <span id="idUsuarioArticulo"></span></p>
-                    <p>Mesa: <span id="mesaArticulo"></span></p>
-                    <p>Orden: <span id="ordenArticulo"></span></p>
-                    <p>Total: <span id="totalArticulo"></span></p>
+        <div><h1>Gestión de Pedidos</h1></div>
+        <section class="container">
+            <div class="item">
+                <div class="input">
+                    <p>Fecha del Pedido</p>
+                    <input type="date" id="txtFecha">
+                    <p>ID del Usuario</p>
+                    <input type="text" id="txtIdUsuario">
+                    <p>Mesa</p>
+                    <input type="number" id="txtMesa">
+                    <p>Orden</p>
+                    <input type="text" id="txtOrden">
+                    <p>Precio Total</p>
+                    <input type="text" id="txtTotal">
                 </div>
-            </template>
+                <div class="botones">
+                    <button type="button" class="boton-1" id="btnCrear" onClick="crearPedido()">Crear </button>
+                    <button type="button" class="boton-1" id="btnActualizar" onClick="actualizarPedido()">Actualizar</button>
+                    <button type="button" class="boton-1" id="btnEliminar" onClick="eliminarPedido()">Eliminar</button>
+                    <button type="button" class="boton-1" id="btnBuscarTodos" onClick="listarPedido()">Buscar Todos</button>
+                </div>
+            </div>
+            <div class="item">
+                <div id="bd"></div>
+                    <template id="tmpPedido">
+                        <div class="articuloBd">
+                            <p><b id="idArticulo"></b>
+                            <p>Fecha: <span id="fechaArticulo"></span></p>
+                            <p>Id de Usuario: <span id="idUsuarioArticulo"></span></p>
+                            <p>Mesa: <span id="mesaArticulo"></span></p>
+                            <p>Orden: <span id="ordenArticulo"></span></p>
+                            <p>Total: <span id="totalArticulo"></span></p>
+                        </div>
+                     </template>
+            </div>
         </section>`;
     }
 
