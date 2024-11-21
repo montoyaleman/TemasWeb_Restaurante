@@ -27,6 +27,8 @@ class Platillo extends HTMLElement {
         <section class="platillos container">
         <div class="item">
             <div class="input">
+                <h2 class="textosDetalles">ID</h2>
+                <input type="text" id="txtId">
                 <h2 class="textosDetalles">Nombre</h2>
                 <input type="text" id="txtNombre">
                 <h2 class="textosDetalles">Tipo</h2>
@@ -54,6 +56,7 @@ class Platillo extends HTMLElement {
             </div>
             <template id="tmpPlatillo">
                 <div class="articuloBd">
+                    <p><b id="idArticulo"></b></p>
                     <p><b id="nombreArticulo"></b> - <b id="tipoArticulo"></b></p>
                     <p>Descripción: <span id="descripcionArticulo"></span></p>
                     <p>Cantidad: <span id="cantidadArticulo"></span></p>
@@ -65,9 +68,7 @@ class Platillo extends HTMLElement {
         </section>`;
 
         
-        shadow.querySelector("#btnAgregar").addEventListener("click", () => this.#agregarPlatillo(shadow));
     }
-
     #consultaPlatillos(shadow){
 		fetch(this.#urlService)
 		.then(response => {
@@ -88,13 +89,16 @@ class Platillo extends HTMLElement {
 
     #consultaIngredientes(shadow) {
         fetch(this.#urlIngredientService)
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
+                return response.json();
+            })
             .then(ingredientes => {
                 let select = shadow.querySelector("#selectIngredientes");
                 ingredientes.forEach(ingrediente => {
                     let option = document.createElement("option");
-                    option.value = ingrediente._id; // ID del ingrediente
-                    option.textContent = `${ingrediente.nombre} (${ingrediente.medida})`; // Nombre y medida del ingrediente
+                    option.value = ingrediente._id;
+                    option.textContent = `${ingrediente.nombre} (${ingrediente.medida})`;
                     select.appendChild(option);
                 });
             })
@@ -102,8 +106,11 @@ class Platillo extends HTMLElement {
     }
 
     #despliegaPlatillo(tmp, div, platillo) {
-        let clone = tmp.content.cloneNode(true);
-        let element = clone.querySelector("#nombreArticulo");
+        let clone = tmp.content.cloneNode(true);		 
+		let element = clone.querySelector("#idArticulo");
+		element.innerHTML=platillo._id;
+
+        element = clone.querySelector("#nombreArticulo");
         element.innerHTML = platillo.nombre;
 
         element = clone.querySelector("#tipoArticulo");
@@ -122,39 +129,6 @@ class Platillo extends HTMLElement {
         element.innerHTML = platillo.ingredientes.join(", "); 
 
         div.appendChild(clone);
-    }
-
-    #agregarPlatillo(shadow) {
-        const nombre = shadow.querySelector("#txtNombre").value;
-        const tipo = shadow.querySelector("#txtTipo").value;
-        const descripcion = shadow.querySelector("#txtDescripcion").value;
-        const cantidad = shadow.querySelector("#txtCantidad").value;
-        const precio = shadow.querySelector("#txtPrecio").value;
-        const select = shadow.querySelector("#selectIngredientes");
-        const ingredientes = Array.from(select.selectedOptions).map(option => option.value);
-
-        const nuevoPlatillo = {
-            nombre,
-            tipo,
-            desc: descripcion,
-            cantidad: parseInt(cantidad),
-            precio: parseFloat(precio),
-            ingredientes
-        };
-
-        fetch(this.#urlService, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(nuevoPlatillo)
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Platillo agregado:', data);
-            this.#consultaPlatillos(shadow);
-        })
-        .catch(err => console.error('Error agregando platillo:', err));
     }
 }
 
