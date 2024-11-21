@@ -48,23 +48,28 @@ function agregarUsuario() {
 }
 
 function actualizarUsuario() {
-    const id = txtId.value.trim()
+    const id = txtId.value.trim();
     const username = txtUsername.value.trim();
     const password = txtPassword.value.trim();
     const name = txtNombre.value.trim();
-    const rol = txtRol.value.trim();
+    const role = txtRol.value.trim();
 
     if (!id) {
-        alert('Por favor, inserte el Id y al menos un campo para actualizar.');
+        alert('Por favor, inserte el ID y al menos un campo para actualizar.');
         return;
     }
 
-    // if (!username || (!password && !name && !rol)) {
-    //     alert('Por favor, inserte el Username y al menos un campo para actualizar.');
-    //     return;
-    // }
+    // Crear objeto de actualización con solo los campos no vacíos
+    const updates = {};
+    if (username) updates.username = username;
+    if (password) updates.password = password;
+    if (name) updates.name = name;
+    if (role) updates.role = isNaN(role) ? role : parseInt(role); // Convertir rol a número si es válido
 
-    const updates = JSON.stringify({ password, name, rol });
+    if (Object.keys(updates).length === 0) {
+        alert('Por favor, inserte al menos un campo para actualizar.');
+        return;
+    }
 
     const result = confirm(`¿Estás seguro de actualizar el usuario con el ID ${id}?`);
     if (result) {
@@ -73,7 +78,7 @@ function actualizarUsuario() {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: updates,
+            body: JSON.stringify(updates),
         })
         .then(response => {
             if (!response.ok) {
@@ -82,7 +87,7 @@ function actualizarUsuario() {
             return response.json();
         })
         .then(data => {
-            alert(`Usuario con Username ${username} actualizado correctamente.`);
+            alert(`Usuario con ID ${id} actualizado correctamente.`);
             location.reload();
         })
         .catch(error => {
@@ -143,7 +148,7 @@ function buscarUsuarioPorId() {
                 return;
             }
 
-            txtUsername.value = usuario.username; // Asignamos el ObjectId al campo correspondiente.
+            txtUsername.value = usuario.username;
             txtPassword.value = ''; // Por seguridad, no mostramos la contraseña.
             txtNombre.value = usuario.name;
             txtRol.value = usuario.role;
