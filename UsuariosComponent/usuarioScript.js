@@ -1,4 +1,3 @@
-const urlServiceUsuarios = 'http://localhost:3000/api/v1/usuario/';
 const usuarioInfo = document.querySelector('usuario-info');
 const txtUsername = usuarioInfo.shadowRoot.querySelector('#txtUsername');
 const txtPassword = usuarioInfo.shadowRoot.querySelector('#txtPassword');
@@ -7,22 +6,22 @@ const txtRol = usuarioInfo.shadowRoot.querySelector('#txtRol');
 
 function agregarUsuario() {
     const username = txtUsername.value.trim();
-    const password = txtPassword.value.trim();
+    const pw = txtPassword.value.trim();
     const name = txtNombre.value.trim();
-    const rol = txtRol.value.trim();
+    const role = txtRol.value.trim();
 
     const usuario = JSON.stringify({
         username,
-        password,
+        password: pw,
         name,
-        rol,
+        rol: role,
     });
 
-    if (!username || !password || !name || !rol) {
+    if (!username || !pw || !name || !role) {
         alert('Por favor, inserte todos los datos necesarios.');
         return;
     } else {
-        fetch(`${urlServiceUsuarios}`, {
+        fetch(`http://localhost:3000/api/v1/usuario/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -62,7 +61,7 @@ function actualizarUsuario() {
 
     const result = confirm(`¿Estás seguro de actualizar el usuario con Username ${username}?`);
     if (result) {
-        fetch(`${urlServiceUsuarios}${username}`, {
+        fetch(`http://localhost:3000/api/v1/usuario/${username}`, {
             method: 'PUT',
             headers: {
                 "Content-Type": "application/json",
@@ -95,7 +94,7 @@ function eliminarUsuario() {
 
     const result = confirm(`¿Estás seguro de borrar el usuario con Username ${username}?`);
     if (result) {
-        fetch(`${urlServiceUsuarios}${username}`, {
+        fetch(`http://localhost:3000/api/v1/usuario/${username}`, {
             method: 'DELETE',
         })
         .then(response => {
@@ -121,7 +120,7 @@ function buscarUsuarioPorUsername() {
         alert('Por favor, inserte un Username para buscar.');
         return;
     } else {
-        fetch(`${urlServiceUsuarios}${username}`, {
+        fetch(`http://localhost:3000/api/v1/usuario/${username}`, {
             method: 'GET',
         })
         .then(async response => {
