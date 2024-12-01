@@ -22,7 +22,7 @@ class Usuario extends HTMLElement {
 
     #render(shadow) {
         shadow.innerHTML += `
-        <div><h1>Gestión de Usuarios</h1></div>
+        <div><h1>Buscar/Listar Usuarios</h1></div>
         <section class="container">            
             <div class="item">
                 <div class="input">
@@ -38,16 +38,12 @@ class Usuario extends HTMLElement {
                     <input type="number" id="txtRol">
                 </div>
                     <div class="botones">
-                        <button type="button" class="button-1" id="btnAgregar" onClick="agregarUsuario()">Agregar</button>
-                        <button type="button" class="button-1" id="btnActualizar" onClick="actualizarUsuario()">Actualizar</button>
-                        <button type="button" class="button-1" id="btnEliminar" onClick="eliminarUsuario()">Eliminar</button>
-                        <br>
-                        <button type="button" class="button-1" id="btnBuscarTodos" onClick="consultarUsuarios()">Buscar Todos</button>
+                        <button type="button" class="button-1" id="btnBuscarTodos" onClick="consultarUsuarios()">Buscar Todos</button>                    
                         <button type="button" class="button-1" id="btnBuscarID" onClick="buscarUsuarioPorId()">Buscar por ID</button>
                     </div>
                 </div>
             </div>
-            
+
             <div class="item">
                 <div id="bd"></div>
                 <template id="tmpUsuario">

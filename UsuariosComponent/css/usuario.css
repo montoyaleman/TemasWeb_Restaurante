@@ -1,10 +1,11 @@
 *{
     padding: 0px;
     margin: 0px;
-    font-weight: 400;
+    font-family: "Roboto", sans-serif;
+    font-weight: 1300;
     font-style: normal;
-	
-	
+    font-size: 26px;
+    background-color: #E9D8BA;	
 }
 
 section.container{    
@@ -38,6 +39,7 @@ h2{
 .articuloBd{
 	padding: 10px 0px;
 }
+
 .articuloBd b{
 	text-align: center;
 }
@@ -86,8 +88,42 @@ button.button-1 {
 	-webkit-user-select: none;
 	touch-action: manipulation;    
 }
+
 .button-1:hover,
 .button-1:focus {
 	background-color: #FCAFAE;
 }
-  
+
+nav {
+	background-color: #FF4C45;
+	color: white;
+	padding: 1em;
+	display: flex;
+	align-items: center;
+	justify-content: center; /* Centrar el contenido horizontalmente */
+	flex-direction: column; /* Permitir que los elementos se apilen */
+	text-align: center;
+	border-radius: 0.5em; /* Bordes redondeados */
+}
+
+nav .nav-left {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap; /* Permitir que los enlaces se acomoden en varias filas */
+}
+
+nav .nav-left a {
+	color: white;
+	text-decoration: none;
+	margin: 0 10px;
+	font-size: 1em;
+	padding: 0.5em 1em; /* Agregar espacio interno */
+	border-radius: 0.25em; /* Bordes redondeados */
+	transition: background-color 0.3s ease; /* Transición suave en el hover */
+}
+
+nav .nav-left a:hover {
+	background-color: #cc3a34;
+	color: white;
+}
