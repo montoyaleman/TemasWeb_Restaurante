@@ -23,8 +23,8 @@ class Platillo extends HTMLElement {
 
     #render(shadow) {
         shadow.innerHTML += `
-        <div> <h1>Gestión de Platillos</h1> </div>
-        <section class="platillos container">
+        <div> <h1>Buscar/Listar Platillos</h1> </div>
+        <section class="container">
         <div class="item">
             <div class="input">
                 <h2 class="textosDetalles">ID</h2>
@@ -43,11 +43,7 @@ class Platillo extends HTMLElement {
                 <select id="selectIngredientes" multiple></select>
             </div>
             <div class="botones">
-                <button type="button" class="button-1" id="btnAgregar" onClick="agregarPlatillo()">Agregar</button>
-					<button type="button" class="button-1" id="btnActualizar" onClick="actualizarPlatillo()">Actualizar</button>
-					<button type="button" class="button-1" id="btnEliminar" onClick="eliminarPlatillo()">Eliminar</button>
-					<br>
-					<button type="button" class="button-1" id="btnBuscar" onClick="buscarPlatillo()">Buscar Todos</button>
+					<button type="button" class="button-1" id="btnBuscarTodos" onClick="consultarPlatillos()">Buscar Todos</button>
 					<button type="button" class="button-1" id="btnBuscarID" onClick="buscarPlatilloPorID()">Buscar por ID</button>
             </div>
         </div>
@@ -67,7 +63,7 @@ class Platillo extends HTMLElement {
             </div>
         </section>`;
 
-        
+
     }
     #consultaPlatillos(shadow){
 		fetch(this.#urlService)

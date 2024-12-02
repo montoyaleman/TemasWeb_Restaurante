@@ -142,7 +142,7 @@ function buscarPlatilloPorID() {
     });
 }
 
-function buscarPlatillo(){
+function consultarPlatillos(){
     location.reload();
 }
 function clear(){    
