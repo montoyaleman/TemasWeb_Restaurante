@@ -9,7 +9,6 @@ class Pedido extends HTMLElement {
         const shadow = this.attachShadow({ mode: "open" });
         this.#agregaEstilo(shadow);
         this.#render(shadow);
-        this.#consultaPedido(shadow);
 
     }
 
@@ -52,40 +51,6 @@ class Pedido extends HTMLElement {
 		</section>`;
     }
 
-    #consultaPedido(shadow) {
-        fetch(this.#urlService)
-            .then(response => response.json())
-            .then(pedidos => {
-                let div = shadow.querySelector("#bd");
-                let tmp = shadow.querySelector("#tmpPedido");
-                pedidos.forEach(u => this.#despliegaPedido(tmp, div, u));
-            })
-            .catch(err => console.error('Error fetching pedidos:', err));
-    }
-
-    #despliegaPedido(tmp, div, pedido) {
-        let clone = tmp.content.cloneNode(true);
-
-        let element = clone.querySelector("#idArticulo");
-        element.innerHTML = pedido._id;
-        
-        element = clone.querySelector("#fechaArticulo");
-        element.innerHTML = pedido.fecha;
-
-        element = clone.querySelector("#idUsuarioArticulo");
-        element.innerHTML = pedido.idUsuario;
-
-        element = clone.querySelector("#mesaArticulo");
-        element.innerHTML = pedido.mesa;
-
-        element = clone.querySelector("#ordenArticulo");
-        element.innerHTML = pedido.orden;
-
-        element = clone.querySelector("#totalArticulo");
-        element.innerHTML = pedido.total;
-
-        div.appendChild(clone);
-    }
 }
 
 window.customElements.define('pedido-info', Pedido);

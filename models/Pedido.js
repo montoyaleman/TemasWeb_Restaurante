@@ -19,7 +19,7 @@ exports.listarPedidos = async (req, res) => {
       await connectarMongoose();
       const restauranteData = await Pedido.find().exec(); 
       res.status(200).json(restauranteData);
-      mongoose.disconnect;
+      mongoose.disconnect();
     } catch (err) {
       console.log(err)
       res.status(500).json({ error: 'No se pudieron obtener los Pedidos' });
@@ -70,7 +70,7 @@ exports.listarPedidos = async (req, res) => {
       const updatedPedido = await Pedido.findOneAndUpdate(filter, update, { new: true });
       if (!updatedPedido) res.status(404).json("No se encontro un Pedido con ese ID.");
       else res.status(200).json(updatedPedido);
-      mongoose.disconnect;
+      mongoose.disconnect();
     } catch (err) {
       console.log(err)
       res.status(500).json({ error: 'No se pudo actualizar el Pedido' });
@@ -84,7 +84,7 @@ exports.listarPedidos = async (req, res) => {
       const pedidoEliminado = await Pedido.findOneAndDelete(filter);
       if (!pedidoEliminado) res.status(404).json("No se encontro un pedido con ese ID.");
       else res.status(200).json({ message: 'Pedido eliminado exitosamente' });
-      mongoose.disconnect;
+      mongoose.disconnect();
     } catch (err) {
       res.status(500).json({ error: 'No se pudo eliminar el pedido' });
     }

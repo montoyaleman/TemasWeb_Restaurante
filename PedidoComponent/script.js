@@ -83,7 +83,7 @@ async function crearPedido(){
 }
 
 
-function actualizarIngrediente(){    
+function actualizarPedido(){    
     const id = txtId.value.trim();
     const mesa = txtMesa.value.trim();
     const total = txtTotal.value.trim();
