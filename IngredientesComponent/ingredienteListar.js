@@ -39,10 +39,6 @@ class Ingrediente extends HTMLElement {
 					<input type="text" id="txtCantidad">
 				</div>
 				<div class="botones">
-					<button type="button" class="button-1" id="btnAgregar" onClick="agregarIngrediente()">Agregar</button>
-					<button type="button" class="button-1" id="btnActualizar" onClick="actualizarIngrediente()">Actualizar</button>
-					<button type="button" class="button-1" id="btnEliminar" onClick="eliminarIngrediente()">Eliminar</button>
-					<br>
 					<button type="button" class="button-1" id="btnBuscar" onClick="buscarIngrediente()">Buscar Todos</button>
 					<button type="button" class="button-1" id="btnBuscarID" onClick="buscarIngredientePorID()">Buscar por ID</button>
 				</div>

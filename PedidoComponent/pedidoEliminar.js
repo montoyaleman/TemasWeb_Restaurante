@@ -28,21 +28,6 @@ class Pedido extends HTMLElement {
 				<div class="input">
 					<h2 class="textosDetalles">ID</h2>
 					<input type="text" id="txtId">
-
-					<h2 class="textosDetalles">Fecha</h2>
-					<input type="date" id="txtFecha">
-
-					<h2 class="textosDetalles">ID Usuario</h2>
-					<input type="text" id="txtIdUsuario">
-
-					<h2 class="textosDetalles">Mesa</h2>
-					<input type="text" id="txtMesa">
-
-                    <h2 class="textosDetalles">Orden</h2>
-					<input type="text" id="txtOrden">
-
-                    <h2 class="textosDetalles">Total</h2>
-					<input type="text" id="txtTotal">
 				</div>
 				<div class="botones">
 					<button type="button" class="button-1" id="btnEliminar" onClick="eliminarPedido()">Eliminar</button>
